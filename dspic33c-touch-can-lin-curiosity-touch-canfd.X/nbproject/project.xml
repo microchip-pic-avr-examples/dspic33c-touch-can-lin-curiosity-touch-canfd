@@ -3,7 +3,7 @@
     <type>com.microchip.mplab.nbide.embedded.makeproject</type>
     <configuration>
         <data xmlns="http://www.netbeans.org/ns/make-project/1">
-            <name>dspic33c-touch-can-lin-curiosity-touch-can-fd-demo</name>
+            <name>dspic33c-touch-can-lin-curiosity-touch-canfd</name>
             <creation-uuid>8c3260d3-7a78-40f2-a50d-de373f99f87a</creation-uuid>
             <make-project-type>0</make-project-type>
             <sourceEncoding>ISO-8859-1</sourceEncoding>

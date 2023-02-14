@@ -1,4 +1,4 @@
-# dspic33c-touch-can-lin-curiosity-touch-can-fd-demo v1.0.0
+# dspic33c-touch-can-lin-curiosity-touch-canfd v1.0.0
 
 ### Release Highlights
 

@@ -142,7 +142,7 @@
                    projectFiles="false">
       <itemPath>Makefile</itemPath>
       <itemPath>dspic33ck-curiosity-touch-can-fd-demo.mc3</itemPath>
-      <itemPath>dspic33c-touch-can-lin-curiosity-touch-can-fd-demo.mc3</itemPath>
+      <itemPath>dspic33c-touch-can-lin-curiosity-touch-canfd.mc3</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>

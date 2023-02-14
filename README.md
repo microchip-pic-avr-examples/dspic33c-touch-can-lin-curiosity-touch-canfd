@@ -38,7 +38,7 @@ The on-board potentiometer position is also transferred to CAN-FD bus.
 
 **MPLAB® X IDE Setup**
 
-- Open the `dspic33c-touch-can-lin-curiosity-touch-can-fd-demo.X` project in MPLAB® X IDE
+- Open the `dspic33c-touch-can-lin-curiosity-touch-canfd.X` project in MPLAB® X IDE
 - Build and program the device
 
 **CAN FD Analyzer Tool Setup**
