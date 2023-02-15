@@ -22,7 +22,7 @@
 */
 
 #include "demo_config.h"
-#include "operations.h"
+#include "application.h"
 #include "../bsp/led.h"
 #include "../bsp/touch.h"
 #include "../bsp/pot.h"
@@ -31,7 +31,7 @@
 static void Operation_Touch_Tasks(void);
 static void Operation_Potentiometer_Tasks(void);
 
-void Operations_Initialze(void)
+void Application_Initialze(void)
 {
     LED_Initialize();
     POT_Initialize();
@@ -39,7 +39,7 @@ void Operations_Initialze(void)
     CAN_Initialize();
 }
 
-void Operations_Tasks(void)
+void Application_Tasks(void)
 {
     Operation_Touch_Tasks();
     Operation_Potentiometer_Tasks();

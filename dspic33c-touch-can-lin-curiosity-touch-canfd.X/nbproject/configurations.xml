@@ -6,8 +6,7 @@
                    projectFiles="true">
       <logicalFolder name="application" displayName="application" projectFiles="true">
         <itemPath>application/demo_config.h</itemPath>
-        <itemPath>application/touch_demo.h</itemPath>
-        <itemPath>application/operations.h</itemPath>
+        <itemPath>application/application.h</itemPath>
       </logicalFolder>
       <logicalFolder name="bsp" displayName="bsp" projectFiles="true">
         <itemPath>bsp/led.h</itemPath>
@@ -74,8 +73,7 @@
                    displayName="Source Files"
                    projectFiles="true">
       <logicalFolder name="application" displayName="application" projectFiles="true">
-        <itemPath>application/touch_demo.c</itemPath>
-        <itemPath>application/operations.c</itemPath>
+        <itemPath>application/application.c</itemPath>
       </logicalFolder>
       <logicalFolder name="bsp" displayName="bsp" projectFiles="true">
         <itemPath>bsp/led.c</itemPath>

@@ -56,7 +56,7 @@ void TOUCH_Initialize(void);
 
 /**
  * @ingroup     touch_demo
- * @brief       This function gets the touch position value on the slider
+ * @brief       This function gets the touch position value of the slider
  * @param[in]   none
  * @return      touch value from 0 to 256
  */

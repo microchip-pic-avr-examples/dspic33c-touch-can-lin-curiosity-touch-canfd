@@ -40,7 +40,7 @@ void CAN_Initialize(void);
 
 /**
  * @ingroup     touch_demo
- * @brief       This function initializes handles CAN process tasks
+ * @brief       This function handles CAN process tasks
  * @param[in]   none
  * @return      none
  */

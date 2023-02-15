@@ -1,5 +1,5 @@
 /**
- * @file      operations.h
+ * @file      application.h
  * 
  * @ingroup   touch_demo
  * 
@@ -27,23 +27,23 @@
     THIS SOFTWARE.
 */
 
-#ifndef OPERATION_MODE_H
-#define OPERATION_MODE_H
+#ifndef APPLICATION_H
+#define APPLICATION_H
 
 /**
  * @ingroup     touch_demo
- * @brief       This function initializes demo required operations
+ * @brief       This function initializes demo required for the application
  * @param[in]   none
  * @return      none
  */
-void Operations_Initialze(void);
+void Application_Initialze(void);
 
 /**
  * @ingroup     touch_demo
- * @brief       This function performs tasks of selected operating mode
+ * @brief       This function performs application tasks 
  * @param[in]   none
  * @return      none
  */
-void Operations_Tasks(void);
+void Application_Tasks(void);
 
-#endif //OPERATION_MODE_H
+#endif //APPLICATION_H
