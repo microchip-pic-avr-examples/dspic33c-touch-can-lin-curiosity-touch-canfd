@@ -7,7 +7,9 @@
  *            
  * @brief     This is the generated driver source file for TRAPS driver
  *            
- * @version   Driver Version 1.0.1
+ * @skipline @version   Firmware Driver Version 1.0.3
+ *
+ * @skipline @version   PLIB Version 1.3.1
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */

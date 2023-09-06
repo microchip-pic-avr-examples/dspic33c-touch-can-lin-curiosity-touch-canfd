@@ -20,9 +20,10 @@
     THIS SOFTWARE.
 */
 
+#include <stdbool.h>
 #include "../mcc_generated_files/adc/adc1.h"
+#include "../mcc_generated_files/touch/include/touch_api.h"
 #include "pot.h"
-
 
 void POT_Initialize(void)
 {
@@ -32,11 +33,11 @@ void POT_Initialize(void)
 uint16_t POT_PositionGet(void)
 {
     uint16_t position;
-    
+    ADC.InterruptDisable();
     ADC.SoftwareTriggerEnable();
     while(!ADC.IsConversionComplete(potentiometer));
     position = ADC.ConversionResultGet(potentiometer);
-    
+    ADC.InterruptEnable();
     return position;
 }
 
@@ -44,11 +45,24 @@ float POT_VoltageGet(void)
 {
     float potVoltage;
     uint16_t position;
-    
+    ADC.InterruptDisable();
     ADC.SoftwareTriggerEnable();
     while(!ADC.IsConversionComplete(potentiometer));
     position = ADC.ConversionResultGet(potentiometer);
     potVoltage = ((float)position*ADC_REFERENCE)/ADC_MAX_COUNT;
-    
+    ADC.InterruptEnable();
     return potVoltage;
+}
+
+void ADC_CommonCallback(void)
+{
+    qtm_dspic33_touch_handler_eoc();
+}
+
+void __attribute__ ( ( __interrupt__ , auto_psv ) ) _ADCInterrupt ( void )
+{
+    ADC_CommonCallback();
+        
+    // clear the ADC1 interrupt flag
+    ADC.InterruptFlagClear();
 }

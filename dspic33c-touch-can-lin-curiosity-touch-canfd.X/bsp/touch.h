@@ -30,7 +30,9 @@
 #ifndef TOUCH_H
 #define TOUCH_H
 
-#include "../mcc_generated_files/touch/touch_api.h"
+#include <stdint.h>
+#include "../mcc_generated_files/touch/touch.h"
+#include "../mcc_generated_files/touch/include/touch_api.h"
 
 /**
  @ingroup  touch_demo

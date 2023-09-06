@@ -7,9 +7,9 @@
  *            
  * @brief     This is the generated driver source file for ADC1 driver
  *            
- * @version   Firmware Driver Version 1.4.1
+ * @skipline @version   Firmware Driver Version 1.4.4
  *
- * @version   PLIB Version 2.3.0-dev.1
+ * @skipline @version   PLIB Version 2.4.2
  *           
  * @skipline  Device : dsPIC33CK1024MP710
 */
@@ -113,7 +113,7 @@ const struct ADC_INTERFACE ADC = {
 void ADC1_Initialize (void)
 {
     // CVDEN disabled; ADSIDL disabled; ADON enabled; 
-    ADCON1L = (0x8000 & 0x7FFF); //Disabling ADON bit
+    ADCON1L = (uint16_t)0x8000 & (uint16_t)0x7FFF; //Disabling ADON bit
     // SHRRES 12-bit resolution; FORM Integer; 
     ADCON1H = 0x60;
     // SHRADCS 2; SHREISEL Early interrupt is generated 1 TADCORE clock prior to data being ready; PTGEN disabled; EIEN disabled; REFERCIE disabled; REFCIE disabled; 
@@ -123,9 +123,9 @@ void ADC1_Initialize (void)
     // CNVCHSEL AN0; SWCTRG disabled; SWLCTRG disabled; SHRSAMP disabled; SUSPCIE disabled; SUSPEND disabled; REFSEL disabled; 
     ADCON3L = 0x0;
     // C0EN enabled; C1EN disabled; C2EN disabled; C3EN disabled; SHREN disabled; CLKDIV 1; CLKSEL FOSC/2; 
-    ADCON3H = (0x1 & 0xFF00); //Disabling C0EN, C1EN, C2EN, C3EN and SHREN bits
-    // SAMC0EN disabled; SAMC1EN disabled; SAMC2EN disabled; SAMC3EN disabled; SYNCTRG0 disabled; SYNCTRG1 disabled; SYNCTRG2 disabled; SYNCTRG3 disabled; 
-    ADCON4L = 0x0;
+    ADCON3H = (uint16_t)0x1 & (uint16_t)0xFF00; //Disabling C0EN, C1EN, C2EN, C3EN and SHREN bits
+    // SAMC0EN enabled; SAMC1EN disabled; SAMC2EN disabled; SAMC3EN disabled; SYNCTRG0 disabled; SYNCTRG1 disabled; SYNCTRG2 disabled; SYNCTRG3 disabled; 
+    ADCON4L = 0x1;
     // C0CHS AN0; C1CHS AN1; C2CHS AN2; C3CHS AN3; 
     ADCON4H = 0x0;
     // SIGN0 disabled; DIFF0 disabled; SIGN1 disabled; DIFF1 disabled; SIGN2 disabled; DIFF2 disabled; SIGN3 disabled; DIFF3 disabled; SIGN4 disabled; DIFF4 disabled; SIGN5 disabled; DIFF5 disabled; SIGN6 disabled; DIFF6 disabled; SIGN7 disabled; DIFF7 disabled; 
@@ -204,8 +204,8 @@ void ADC1_Initialize (void)
     ADLVLTRGL = 0x0;
     // LVLEN16 disabled; LVLEN17 disabled; LVLEN18 disabled; LVLEN27 disabled; LVLEN28 disabled; LVLEN29 disabled; LVLEN30 disabled; LVLEN31 disabled; LVLEN19 disabled; LVLEN20 disabled; LVLEN21 disabled; LVLEN22 disabled; LVLEN23 disabled; LVLEN24 disabled; LVLEN25 disabled; LVLEN26 disabled; 
     ADLVLTRGH = 0x0;
-    // SAMC 0x0; 
-    ADCORE0L = 0x0;
+    // SAMC 8; 
+    ADCORE0L = 0x8;
     // SAMC 0x0; 
     ADCORE1L = 0x0;
     // SAMC 0x0; 
@@ -229,7 +229,7 @@ void ADC1_Initialize (void)
     // EISTAT16 disabled; EISTAT17 disabled; EISTAT18 disabled; EISTAT27 disabled; EISTAT28 disabled; EISTAT29 disabled; EISTAT30 disabled; EISTAT31 disabled; EISTAT19 disabled; EISTAT20 disabled; EISTAT21 disabled; EISTAT22 disabled; EISTAT23 disabled; EISTAT24 disabled; EISTAT25 disabled; EISTAT26 disabled; 
     ADEISTATH = 0x0;
     // C0CIE disabled; C1CIE disabled; C2CIE disabled; C3CIE disabled; SHRCIE disabled; WARMTIME 16 Source Clock Periods; 
-    ADCON5H = (0x400 & 0xF0FF); //Disabling WARMTIME bit
+    ADCON5H = (uint16_t)0x400 & (uint16_t)0xF0FF; //Disabling WARMTIME bit
     // 
     ADCBUF0 = 0x0;
     // 
@@ -472,7 +472,7 @@ void ADC1_CorePowerEnable(enum ADC_DEDICATED_CORE core)
 }
 
 
-void ADC1_SharedCorePowerEnable ( ) 
+void ADC1_SharedCorePowerEnable (void) 
 {
     ADCON5Lbits.SHRPWR = 1;   
     while(ADCON5Lbits.SHRRDY == 0)

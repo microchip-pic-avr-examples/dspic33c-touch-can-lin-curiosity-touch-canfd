@@ -6,9 +6,11 @@
  * @defgroup  clockdriver Clock Driver
  *            
  * @brief     Clock configurator driver for System and Peripheral Clock using dsPIC MCUs.
- *            
- * @version   Driver Version 1.0.1
- *            
+ *
+ * @version   Firmware Driver Version 1.0.2
+ *
+ * @version   PLIB Version 1.4.1
+ *
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
@@ -78,7 +80,7 @@ void CLOCK_Initialize(void);
  * @return   true   - Auxiliary PLL locked
  * @return   false  - Auxiliary PLL not locked
  */
-bool CLOCK_AuxPllLockStatusGet();
+bool CLOCK_AuxPllLockStatusGet(void);
 
 #endif    /* CLOCK_H */
 /**

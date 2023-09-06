@@ -6,9 +6,11 @@
  * @ingroup   resetdriver
  *            
  * @brief     This is the generated driver types header file for the RESET driver
- *            
- * @version   Driver Version 1.0.0
- *            
+ *
+ * @skipline @version   Firmware Driver Version 1.0.3
+ *
+ * @skipline @version   PLIB Version 1.1.0
+ *
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
@@ -56,6 +58,7 @@ enum RESET_TYPES
 */
 enum RESET_MASKS
 { 
+  RESET_MASK_POR       = 0x0001,   /**< Defines the power ON Reset flag mask location */
   RESET_MASK_WDTO      = 0x0010,   /**< Defines the watchdog timeout reset flag mask location */
   RESET_MASK_SWR       = 0x0040,   /**< Defines the software reset mask location */
   RESET_MASK_EXTR      = 0x0080,   /**< Defines the external reset mask location */

@@ -7,7 +7,9 @@
  *            
  * @brief     This is the generated driver source file for INTERRUPT driver
  *            
- * @version   Driver Version 1.1.0
+ * @skipline @version   Firmware Driver Version 1.1.2
+ *
+ * @skipline @version   PLIB Version 1.3.1
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */
@@ -53,9 +55,9 @@ void INTERRUPT_Initialize(void)
     // Priority: 1
     IPC11bits.DMTIP = 1;
     
-    // T1: Timer 1
+    // CCT4: CCP4 Timer Event
     // Priority: 1
-    IPC0bits.T1IP = 1;
+    IPC10bits.CCT4IP = 1;
     
 }
 
@@ -65,5 +67,5 @@ void INTERRUPT_Deinitialize(void)
     IPC6bits.C1IP = 4;
     IPC1bits.CCT1IP = 4;
     IPC11bits.DMTIP = 4;
-    IPC0bits.T1IP = 4;
+    IPC10bits.CCT4IP = 4;
 }

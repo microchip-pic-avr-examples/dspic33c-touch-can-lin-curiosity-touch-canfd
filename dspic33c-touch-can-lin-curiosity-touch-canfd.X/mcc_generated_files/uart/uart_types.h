@@ -7,9 +7,9 @@
  * 
  * @brief     This is the generated driver types header file for the UART driver
  *
- * @version   Firmware Driver Version 1.5.0
+ * @skipline @version   Firmware Driver Version 1.6.1
  *
- * @version   PLIB Version 1.4.0-dev.2
+ * @skipline @version   PLIB Version 1.4.1
  *
  * @skipline  Device : dsPIC33CK1024MP710
 */

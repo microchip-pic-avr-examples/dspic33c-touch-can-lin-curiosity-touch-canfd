@@ -1,5 +1,11 @@
-/* QTouch Modular Library Configuration */
-/* Header file for application project - Acquisition library API */
+/*============================================================================
+Filename : qtm_touch_key_api.h
+Project : QTouch Modular Library
+Purpose : Structs and definitions for use within modules
+------------------------------------------------------------------------------
+Copyright (c) 2019 Microchip. All rights reserved.
+------------------------------------------------------------------------------
+============================================================================*/
 
 #ifndef TOUCH_API_KEYS_H
 #define TOUCH_API_KEYS_H
@@ -34,35 +40,38 @@ typedef int16_t touch_delta_t;
 /* ! Status of Touch measurement. */
 typedef uint16_t touch_acq_status_t;
 
-typedef enum tag_hysteresis_t {
-    HYST_50,
-    HYST_25,
-    HYST_12_5,
-    HYST_6_25,
-    MAX_HYST
+typedef enum tag_hysteresis_t 
+{
+  HYST_50,
+  HYST_25,
+  HYST_12_5,
+  HYST_6_25,
+  MAX_HYST
 }
 QTM_hysteresis_t;
 
-typedef enum tag_aks_group_t {
-    NO_AKS_GROUP,
-    AKS_GROUP_1,
-    AKS_GROUP_2,
-    AKS_GROUP_3,
-    AKS_GROUP_4,
-    AKS_GROUP_5,
-    AKS_GROUP_6,
-    AKS_GROUP_7,
-    MAX_AKS_GROUP
+typedef enum tag_aks_group_t
+{
+  NO_AKS_GROUP,
+  AKS_GROUP_1,
+  AKS_GROUP_2,
+  AKS_GROUP_3,
+  AKS_GROUP_4,
+  AKS_GROUP_5,
+  AKS_GROUP_6,
+  AKS_GROUP_7,
+  MAX_AKS_GROUP
 }
 QTM_aks_group_t;
 
-typedef enum tag_recal_threshold_t {
-    RECAL_100,
-    RECAL_50,
-    RECAL_25,
-    RECAL_12_5,
-    RECAL_6_25,
-    MAX_RECAL
+typedef enum tag_recal_threshold_t 
+{
+  RECAL_100,
+  RECAL_50,
+  RECAL_25,
+  RECAL_12_5,
+  RECAL_6_25,
+  MAX_RECAL
 }
 recal_threshold_t;
 
@@ -70,11 +79,12 @@ recal_threshold_t;
 0 = none (application calls only)
 1 = Unresolved - i.e. sensors in process of calibration / filter in / filter out and AKS groups
 2 = All keys
- */
-typedef enum {
-    REBURST_NONE,
-    REBURST_UNRESOLVED,
-    REBURST_ALL
+*/
+typedef enum 
+{
+  REBURST_NONE,
+  REBURST_UNRESOLVED,
+  REBURST_ALL
 }
 reburst_mode_t;
 /*----------------------------------------------------------------------------
@@ -82,47 +92,51 @@ reburst_mode_t;
  *----------------------------------------------------------------------------*/
 
 /* Key process module */
-
 /* Sensor group config */
-typedef struct {
-    uint16_t num_key_sensors; /* Number of sensors */
-    uint8_t sensor_touch_di; /* Count in to Detect */
-    uint8_t sensor_max_on_time; /* Max on duration x 200ms */
-    uint8_t sensor_anti_touch_di; /* Count in to Anti-touch recal */
-    uint8_t sensor_anti_touch_recal_thr; /* Anti-touch recal threshold % */
-    uint8_t sensor_touch_drift_rate; /* One count per <200> ms */
-    uint8_t sensor_anti_touch_drift_rate; /* One count per <200> ms */
-    uint8_t sensor_drift_hold_time; /* Drift hold time */
-    uint8_t sensor_reburst_mode; /* None / Unresolved / All */
+typedef struct
+{
+  uint16_t num_key_sensors;             /* Number of sensors */
+  uint8_t sensor_touch_di;              /* Count in to Detect */
+  uint8_t sensor_max_on_time;           /* Max on duration x 200ms */
+  uint8_t sensor_anti_touch_di;         /* Count in to Anti-touch recal */
+  uint8_t sensor_anti_touch_recal_thr;  /* Anti-touch recal threshold % */
+  uint8_t sensor_touch_drift_rate;      /* One count per <200> ms */
+  uint8_t sensor_anti_touch_drift_rate; /* One count per <200> ms */
+  uint8_t sensor_drift_hold_time;       /* Drift hold time */
+  uint8_t sensor_reburst_mode;          /* None / Unresolved / All */
 } qtm_touch_key_group_config_t;
 
 /* Sensor group data */
-typedef struct {
-    uint8_t qtm_keys_status; /* Status byte - bitfield: Bit 7 = REBURST_REQ, Bits 6:1 = Reserved, Bit 0 = Detect */
-    uint16_t acq_group_timestamp; /* For tracking this group drift etc */
-    uint8_t dht_count_in; /* Count of drift hold time */
-    uint8_t tch_drift_count_in; /* Count of towards touch drift */
-    uint8_t antitch_drift_count_in; /* Count of away from touch drift */
-} qtm_touch_key_group_data_t;
+typedef struct
+{
+  uint8_t qtm_keys_status;           /* Status byte - bitfield: Bit 7 = REBURST_REQ, Bits 6:1 = Reserved, Bit 0 = Detect */
+  uint16_t acq_group_timestamp;      /* For tracking this group drift etc */
+  uint8_t dht_count_in ;             /* Count of drift hold time */
+  uint8_t tch_drift_count_in;        /* Count of towards touch drift */
+  uint8_t antitch_drift_count_in;    /* Count of away from touch drift */
+}qtm_touch_key_group_data_t;
 
 /* Sensor keys config */
-typedef struct {
-    uint8_t channel_threshold; /* Touch detection threshold */
-    uint8_t channel_hysteresis; /* Percentage of threshold reduction to exit detect state */
-    uint8_t channel_aks_group; /* 0 = None, 1-255 = group number */
-} qtm_touch_key_config_t;
+typedef struct
+{
+  uint8_t channel_threshold;     /* Touch detection threshold */
+  uint8_t channel_hysteresis;    /* Percentage of threshold reduction to exit detect state */
+  uint8_t channel_aks_group;     /* 0 = None, 1-255 = group number */  
+}qtm_touch_key_config_t;
 
 
 /* ---------------------------------------------------------------------------------------- */
 /* Key sensor run-time data - api common */
 /* ---------------------------------------------------------------------------------------- */
 
+
 /* Container */
-typedef struct {
-    qtm_touch_key_group_data_t(*qtm_touch_key_group_data);
-    qtm_touch_key_group_config_t(*qtm_touch_key_group_config);
-    qtm_touch_key_data_t(*qtm_touch_key_data);
-    qtm_touch_key_config_t(*qtm_touch_key_config);
+typedef struct
+{
+  qtm_touch_key_group_data_t (*qtm_touch_key_group_data);
+  qtm_touch_key_group_config_t (*qtm_touch_key_group_config);
+  qtm_touch_key_data_t (*qtm_touch_key_data);
+  qtm_touch_key_config_t (*qtm_touch_key_config);
 } qtm_touch_key_control_t;
 
 

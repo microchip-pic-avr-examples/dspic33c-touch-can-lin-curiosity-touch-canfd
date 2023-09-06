@@ -8,7 +8,9 @@
 ; 
 ; @brief     Assembly language optimized helper routines required for calibration
 ;
-; @version   Driver Version 1.1.0
+; @skipline @version   Firmware Driver Version 1.2.1
+;
+; @skipline @version   PLIB Version 1.1.0
 ;
 ; @skipline  Device : dsPIC33CK1024MP710
 ;
@@ -55,6 +57,7 @@
  * ;uint32_t  DMT_CalibratedCounterGet(void);
  * Gets the count of DMT counter just before calling CalibratedCounterGet function
  *
+ * @param    none
  * @return   32-bit (unsigned long) caliberated count
  *                      
  *   Registers used:  w0 w1 w2

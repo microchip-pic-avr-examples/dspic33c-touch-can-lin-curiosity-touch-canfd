@@ -7,9 +7,9 @@
  *            
  * @brief     This is the generated driver header file for the CAN1 driver using CCL
  *            
- * @version   Firmware Driver Version 1.3.0
+ * @skipline @version   Firmware Driver Version 1.3.1
  *
- * @version   PLIB Version 1.5.0
+ * @skipline @version   PLIB Version 1.7.0
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */
@@ -222,6 +222,7 @@ enum CAN1_RX_FIFO_CHANNELS
 /**
  * @ingroup  candriver
  * @brief    Initializes CAN1 module 
+ * @param    none
  * @return   none  
  */
 void CAN1_Initialize(void);
@@ -229,6 +230,7 @@ void CAN1_Initialize(void);
 /**
  * @ingroup  candriver
  * @brief    Deinitializes CAN1 to POR values.
+ * @param    none
  * @return   none 
  */
 void CAN1_Deinitialize(void);
@@ -248,6 +250,7 @@ enum CAN_OP_MODE_STATUS CAN1_OperationModeSet(const enum CAN_OP_MODES requestMod
  * @brief    Get the CAN1 operation mode
  * @pre      \ref CAN1_Initialize() function should be called
  *           before calling this function. 
+ * @param    none
  * @return   Return the present CAN1 operation mode   
  */
 enum CAN_OP_MODES CAN1_OperationModeGet(void);
@@ -303,6 +306,7 @@ enum CAN_TX_FIFO_STATUS CAN1_TransmitFIFOStatusGet(const enum CAN1_TX_FIFO_CHANN
  * @ingroup  candriver
  * @brief    Returns the bus off status
  * @pre      \ref CAN1_Initialize() function should be called before calling this function.
+ * @param    none
  * @return   true  - CAN node in Bus Off state
  * @return   false - CAN node not in Bus Off state
  */
@@ -313,6 +317,7 @@ bool CAN1_IsBusOff(void);
  * @brief    Returns the transmit error passive state
  * @pre      \ref CAN1_Initialize() function should be called
  *           before calling this function.
+ * @param    none
  * @return   true    - CAN node Error Passive state
  * @return   false   - CAN node not Error Passive state   
  */
@@ -325,6 +330,7 @@ bool CAN1_IsTxErrorPassive(void);
  *           128, then transmitter error warning state is set.
  * @pre      \ref CAN1_Initialize() function should be called before
  *           calling this function.
+ * @param    none
  * @return   true    - CAN node Error warning state
  * @return   false   - CAN node not Error warning state   
  */
@@ -335,6 +341,7 @@ bool CAN1_IsTxErrorWarning(void);
  * @brief    Returns the transmit error active state 
  * @pre      \ref CAN1_Initialize() function should be called before 
  *           calling this function.
+ * @param    none
  * @return   true    - CAN node Error active state
  * @return   false   - CAN node not Error active state  
  */
@@ -345,6 +352,7 @@ bool CAN1_IsTxErrorActive(void);
  * @brief    Returns the receive error passive state
  * @pre      \ref CAN1_Initialize() function should be called before
  *           calling this function.
+ * @param    none
  * @return   true    - CAN node Error Passive state
  * @return   false   - CAN node not Error Passive state  
  */
@@ -357,6 +365,7 @@ bool CAN1_IsRxErrorPassive(void);
  *           receiver error warning state is set.
  * @pre      \ref CAN1_Initialize() function should be called before
  *           calling this function.
+ * @param    none
  * @return   true    - CAN node Error warning state
  * @return   false   - CAN node not Error warning state  
  */
@@ -367,6 +376,7 @@ bool CAN1_IsRxErrorWarning(void);
  * @brief    Returns the receive error active state
  * @pre      \ref CAN1_Initialize() function should be called before
  *           calling this function.
+ * @param    none
  * @return   true    - CAN node Error active state
  * @return   false   - CAN node not Error active state  
  */
@@ -377,6 +387,7 @@ bool CAN1_IsRxErrorActive(void);
  * @brief    Sets the CAN node in sleep mode
  * @pre      \ref CAN1_Initialize() function should be called before
  *           calling this function.
+ * @param    none
  * @return   none  
  */
 void CAN1_Sleep(void);
@@ -386,6 +397,7 @@ void CAN1_Sleep(void);
  * @brief   Returns the number of CAN messages received in all the FIFO
  * @pre     \ref CAN1_Initialize() function should be called before
  *          calling this function.
+ * @param   none
  * @return  Number of messages received. 
  */
 uint8_t CAN1_ReceivedMessageCountGet(void);
@@ -415,6 +427,7 @@ void CAN1_InvalidMessageCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_InvalidMessageCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_InvalidMessageCallback(void);
@@ -433,6 +446,7 @@ void CAN1_BusWakeUpActivityCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_BusWakeUpActivityCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_BusWakeUpActivityCallback(void);
@@ -451,6 +465,7 @@ void CAN1_BusErrorCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_BusErrorCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_BusErrorCallback(void);
@@ -469,6 +484,7 @@ void CAN1_ModeChangeCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_ModeChangeCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_ModeChangeCallback(void);
@@ -487,6 +503,7 @@ void CAN1_SystemErrorCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_SystemErrorCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_SystemErrorCallback(void);
@@ -505,6 +522,7 @@ void CAN1_TxAttemptCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_TxAttemptCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_TxAttemptCallback(void);
@@ -523,6 +541,7 @@ void CAN1_RxBufferOverFlowCallbackRegister(void (*handler)(void));
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
  *           or can register a custom callback function using \ref CAN1_RxBufferOverFlowCallbackRegister.
+ * @param    none
  * @return   none  
  */
 void CAN1_RxBufferOverFlowCallback(void);

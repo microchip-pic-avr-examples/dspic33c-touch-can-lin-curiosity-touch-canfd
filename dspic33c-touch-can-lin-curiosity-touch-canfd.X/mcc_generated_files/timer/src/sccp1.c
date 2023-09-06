@@ -7,9 +7,9 @@
  * 
  * @brief     This is the generated driver source file for SCCP1-TIMER driver
  *
- * @version   Firmware Driver Version 1.4.1
+ * @skipline @version   Firmware Driver Version 1.5.1
  *
- * @version   PLIB Version 1.5.0-dev.3
+ * @skipline @version   PLIB Version 1.6.2
  *
  * @skipline  Device : dsPIC33CK1024MP710
 */
@@ -39,6 +39,7 @@
 
 #include <stddef.h> 
 #include "../sccp1.h"
+#include "../timer_interface.h"
 
 // Section: Data Type Definitions
 
@@ -58,7 +59,9 @@ const struct TIMER_INTERFACE CAN_TransmitTimer = {
     .Deinitialize   = &SCCP1_Timer_Deinitialize,
     .Start          = &SCCP1_Timer_Start,
     .Stop           = &SCCP1_Timer_Stop,
+    #if TIMER_PERIODCOUNTSET_API_SUPPORT
     .PeriodCountSet = &SCCP1_Timer_PeriodCountSet,
+    #endif
     .PeriodSet      = &SCCP1_Timer_PeriodSet,
     .CounterGet     = &SCCP1_Timer_CounterGet,
     .PeriodGet	    = &SCCP1_Timer_PeriodGet,
