@@ -11,9 +11,9 @@
  *            to easily migrate the user application to other device which might have varied
  *            feature list.
  *            
- * @version   Firmware Driver Version 1.3.0
+ * @skipline @version   Firmware Driver Version 1.3.1
  *
- * @version   PLIB Version 1.5.0
+ * @skipline @version   PLIB Version 1.7.0
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */

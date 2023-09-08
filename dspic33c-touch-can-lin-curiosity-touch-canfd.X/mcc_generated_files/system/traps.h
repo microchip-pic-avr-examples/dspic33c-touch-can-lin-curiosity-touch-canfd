@@ -7,7 +7,9 @@
  *            
  * @brief     Traps driver with handler for all types of traps using dsPIC MCUs.
  *            
- * @version   Driver Version 1.0.1
+ * @skipline @version   Firmware Driver Version 1.0.3
+ *
+ * @skipline @version   PLIB Version 1.3.1
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */

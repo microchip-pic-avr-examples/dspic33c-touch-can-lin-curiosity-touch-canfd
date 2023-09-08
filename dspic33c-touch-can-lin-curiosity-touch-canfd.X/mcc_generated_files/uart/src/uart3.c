@@ -7,9 +7,9 @@
  *            
  * @brief     This is the generated driver source file for the UART3 driver.
  *            
- * @version   Firmware Driver Version 1.5.0
+ * @skipline @version   Firmware Driver Version 1.6.1
  *
- * @version   PLIB Version 1.4.0-dev.2
+ * @skipline @version   PLIB Version 1.4.1
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */
@@ -56,7 +56,7 @@
 
 // Section: Driver Interface
 
-const struct UART_INTERFACE DebugUart = {
+const struct UART_INTERFACE DebugUART = {
     .Initialize = &UART3_Initialize,
     .Deinitialize = &UART3_Deinitialize,
     .Read = &UART3_Read,
@@ -205,25 +205,25 @@ size_t UART3_ErrorGet(void)
     uartError.status = 0;
     if(U3STAbits.FERR == 1U)
     {
-        uartError.frammingError = uartError.status|UART_ERROR_FRAMING_MASK;
+        uartError.status = uartError.status|UART_ERROR_FRAMING_MASK;
     }
     if(U3STAbits.PERR== 1U)
     {
-        uartError.parityError = uartError.status|UART_ERROR_PARITY_MASK;
+        uartError.status = uartError.status|UART_ERROR_PARITY_MASK;
     }
     if(U3STAbits.OERR== 1U)
     {
-        uartError.overrunError = uartError.status|UART_ERROR_RX_OVERRUN_MASK;
+        uartError.status = uartError.status|UART_ERROR_RX_OVERRUN_MASK;
         U3STAbits.OERR = 0;
     }
     if(U3STAbits.TXCIF== 1U)
     {
-        uartError.txCollisionError = uartError.status|UART_ERROR_TX_COLLISION_MASK;
+        uartError.status = uartError.status|UART_ERROR_TX_COLLISION_MASK;
         U3STAbits.TXCIF = 0;
     }
     if(U3STAbits.ABDOVF== 1U)
     {
-        uartError.autoBaudOverflow = uartError.status|UART_ERROR_AUTOBAUD_OVERFLOW_MASK;
+        uartError.status = uartError.status|UART_ERROR_AUTOBAUD_OVERFLOW_MASK;
         U3STAbits.ABDOVF = 0;
     }
     

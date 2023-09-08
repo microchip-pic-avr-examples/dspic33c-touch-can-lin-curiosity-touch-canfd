@@ -7,7 +7,9 @@
  *            
  * @brief     This is the generated driver types header file for the INTERRUPT driver
  *            
- * @version   Driver Version 1.1.0
+ * @skipline @version   Firmware Driver Version 1.1.2
+ *
+ * @skipline @version   PLIB Version 1.3.1
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */

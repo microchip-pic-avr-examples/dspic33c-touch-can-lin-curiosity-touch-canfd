@@ -7,9 +7,9 @@
  *            
  * @brief     This is the generated driver source file for PINS driver.
  *
- * @version   Firmware Driver Version 1.0.1
+ * @skipline @version   Firmware Driver Version 1.0.2
  *
- * @version   PLIB Version 1.1.0
+ * @skipline @version   PLIB Version 1.3.0
  *
  * @skipline  Device : dsPIC33CK1024MP710
 */
@@ -49,7 +49,7 @@ void PINS_Initialize(void)
      * Setting the Output Latch SFR(s)
      ***************************************************************************/
     LATA = 0x0000;
-    LATB = 0x4000;
+    LATB = 0x0000;
     LATC = 0x0000;
     LATD = 0x0000;
     LATE = 0x0000;
@@ -59,7 +59,7 @@ void PINS_Initialize(void)
      * Setting the GPIO Direction SFR(s)
      ***************************************************************************/
     TRISA = 0x01FF;
-    TRISB = 0xABFD;
+    TRISB = 0xABFF;
     TRISC = 0x7FFF;
     TRISD = 0x7FFF;
     TRISE = 0xFC3F;
@@ -98,7 +98,7 @@ void PINS_Initialize(void)
      * Setting the Analog/Digital Configuration SFR(s)
      ***************************************************************************/
     ANSELA = 0x001F;
-    ANSELB = 0x039D;
+    ANSELB = 0x009F;
     ANSELC = 0x00CF;
     ANSELD = 0x2C00;
     ANSELE = 0x000F;

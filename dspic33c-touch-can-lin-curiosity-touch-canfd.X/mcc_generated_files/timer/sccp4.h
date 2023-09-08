@@ -1,11 +1,11 @@
 /**
- * SCCP1-TIMER Generated Driver Header File 
+ * SCCP4-TIMER Generated Driver Header File 
  * 
- * @file      sccp1.h
+ * @file      sccp4.h
  * 
  * @ingroup   timerdriver
  * 
- * @brief     This is the generated driver header file for the SCCP1-TIMER driver
+ * @brief     This is the generated driver header file for the SCCP4-TIMER driver
  *
  * @skipline @version   Firmware Driver Version 1.5.1
  *
@@ -35,8 +35,8 @@
     THIS SOFTWARE.
 */
 
-#ifndef SCCP1_H
-#define SCCP1_H
+#ifndef SCCP4_H
+#define SCCP4_H
 
 // Section: Included Files
 
@@ -56,165 +56,165 @@
  *           This allows defining a structure with application specific name using 
  *           the 'Custom Name' field. Application specific name allows the API Portability.
 */
-extern const struct TIMER_INTERFACE CAN_TransmitTimer;
+extern const struct TIMER_INTERFACE Timer;
 
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_Initialize API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_Initialize API
  */
-#define CAN_TransmitTimer_Initialize SCCP1_Timer_Initialize
+#define Timer_Initialize SCCP4_Timer_Initialize
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_Deinitialize API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_Deinitialize API
  */
-#define CAN_TransmitTimer_Deinitialize SCCP1_Timer_Deinitialize
+#define Timer_Deinitialize SCCP4_Timer_Deinitialize
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_Tasks API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_Tasks API
  */
-#define CAN_TransmitTimer_Tasks SCCP1_Timer_Tasks
+#define Timer_Tasks SCCP4_Timer_Tasks
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_Start API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_Start API
  */
-#define CAN_TransmitTimer_Start SCCP1_Timer_Start
+#define Timer_Start SCCP4_Timer_Start
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_Stop API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_Stop API
  */
-#define CAN_TransmitTimer_Stop SCCP1_Timer_Stop
+#define Timer_Stop SCCP4_Timer_Stop
 
 #if TIMER_PERIODCOUNTSET_API_SUPPORT
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_PeriodCountSet API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_PeriodCountSet API
  */
-#define CAN_TransmitTimer_PeriodCountSet SCCP1_Timer_PeriodCountSet
+#define Timer_PeriodCountSet SCCP4_Timer_PeriodCountSet
 #endif
 
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_PeriodSet API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_PeriodSet API
  */
-#define CAN_TransmitTimer_PeriodSet SCCP1_Timer_PeriodSet
+#define Timer_PeriodSet SCCP4_Timer_PeriodSet
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_PeriodGet API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_PeriodGet API
  */
-#define CAN_TransmitTimer_PeriodGet SCCP1_Timer_PeriodGet
+#define Timer_PeriodGet SCCP4_Timer_PeriodGet
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_CounterGet API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_CounterGet API
  */
-#define CAN_TransmitTimer_CounterGet SCCP1_Timer_CounterGet
+#define Timer_CounterGet SCCP4_Timer_CounterGet
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_Counter16BitGet API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_Counter16BitGet API
  */
-#define CAN_TransmitTimer_Counter16BitGet SCCP1_Timer_Counter16BitGet
+#define Timer_Counter16BitGet SCCP4_Timer_Counter16BitGet
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_InterruptPrioritySet API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_InterruptPrioritySet API
  */
-#define CAN_TransmitTimer_InterruptPrioritySet SCCP1_Timer_InterruptPrioritySet
+#define Timer_InterruptPrioritySet SCCP4_Timer_InterruptPrioritySet
 
 /**
  * @ingroup  timerdriver
- * @brief    This macro defines the Custom Name for \ref SCCP1_Timer_TimeoutCallbackRegister API
+ * @brief    This macro defines the Custom Name for \ref SCCP4_Timer_TimeoutCallbackRegister API
  */
-#define CAN_TransmitTimer_TimeoutCallbackRegister SCCP1_Timer_TimeoutCallbackRegister
+#define Timer_TimeoutCallbackRegister SCCP4_Timer_TimeoutCallbackRegister
 
 // Section: Driver Interface Functions
 
 /**
  * @ingroup  timerdriver
- * @brief    Initializes the SCCP1 module 
+ * @brief    Initializes the SCCP4 module 
  * @param    none
  * @return   none  
  */
-void SCCP1_Timer_Initialize (void);
+void SCCP4_Timer_Initialize (void);
 
 /**
  * @ingroup  timerdriver
- * @brief    Deinitializes the SCCP1 to POR values
+ * @brief    Deinitializes the SCCP4 to POR values
  * @param    none
  * @return   none  
  */
-void SCCP1_Timer_Deinitialize(void);
+void SCCP4_Timer_Deinitialize(void);
 
 /**
  * @ingroup  timerdriver
  * @brief    Starts the timer
- * @pre      \ref SCCP1_Timer_Initialize must be called
+ * @pre      \ref SCCP4_Timer_Initialize must be called
  * @param    none
  * @return   none  
  */
-void SCCP1_Timer_Start(void);
+void SCCP4_Timer_Start(void);
 
 /**
  * @ingroup  timerdriver
  * @brief    Stops the timer
- * @pre      \ref SCCP1_Timer_Initialize must be called
+ * @pre      \ref SCCP4_Timer_Initialize must be called
  * @param    none
  * @return   none  
  */
-void SCCP1_Timer_Stop(void);
+void SCCP4_Timer_Stop(void);
 
 /**
  * @ingroup  timerdriver
- * @brief    Sets the SCCP1-Timer period count value
- * @pre      \ref SCCP1_Timer_Initialize must be called
+ * @brief    Sets the SCCP4-Timer period count value
+ * @pre      \ref SCCP4_Timer_Initialize must be called
  * @param[in]  count - period value
  * @return   none  
  */
-void SCCP1_Timer_PeriodSet(uint32_t count);
+void SCCP4_Timer_PeriodSet(uint32_t count);
 
 /**
  * @ingroup  timerdriver
- * @brief    This inline function gets the SCCP1-Timer period count value
- * @pre      \ref SCCP1_Timer_Initialize must be called
+ * @brief    This inline function gets the SCCP4-Timer period count value
+ * @pre      \ref SCCP4_Timer_Initialize must be called
  * @param    none
  * @return   Period count value  
  */
-inline static uint32_t SCCP1_Timer_PeriodGet(void)
+inline static uint32_t SCCP4_Timer_PeriodGet(void)
 {
-    if(CCP1CON1Lbits.T32 == 1)
+    if(CCP4CON1Lbits.T32 == 1)
     {
-        return (((uint32_t)CCP1PRH << 16U) | (CCP1PRL) );
+        return (((uint32_t)CCP4PRH << 16U) | (CCP4PRL) );
     }
     else
     {
-        return (uint32_t) CCP1PRL;
+        return (uint32_t) CCP4PRL;
     }
 }
 
 /**
  * @ingroup  timerdriver
- * @brief    This inline function gets the SCCP1-Timer elapsed count value
+ * @brief    This inline function gets the SCCP4-Timer elapsed count value
  * @param    none
  * @return   Elapsed count value of the timer  
  */
-inline static uint32_t SCCP1_Timer_CounterGet(void)
+inline static uint32_t SCCP4_Timer_CounterGet(void)
 {
-    if(CCP1CON1Lbits.T32 == 1)
+    if(CCP4CON1Lbits.T32 == 1)
     {
-        return (((uint32_t)CCP1TMRH << 16U) | CCP1TMRL);
+        return (((uint32_t)CCP4TMRH << 16U) | CCP4TMRL);
     }
     else
     {
-        return (uint32_t)CCP1TMRL;
+        return (uint32_t)CCP4TMRL;
     }
 }
 
 /**
  * @ingroup  timerdriver
- * @brief    This inline function gets the SCCP1-Timer least significant 16 bit elapsed count value
+ * @brief    This inline function gets the SCCP4-Timer least significant 16 bit elapsed count value
  * @param    none
  * @return   Least significant 16 bit elapsed count value of the timer  
  */
-inline static uint16_t SCCP1_Timer_Counter16BitGet(void)
+inline static uint16_t SCCP4_Timer_Counter16BitGet(void)
 {
-    return CCP1TMRL;
+    return CCP4TMRL;
 }
 
 /**
@@ -223,49 +223,49 @@ inline static uint16_t SCCP1_Timer_Counter16BitGet(void)
  * @param    none
  * @return   none  
  */
-void SCCP1_Timer_InterruptPrioritySet(enum INTERRUPT_PRIORITY priority);
+void SCCP4_Timer_InterruptPrioritySet(enum INTERRUPT_PRIORITY priority);
 
 
 /**
  * @ingroup    timerdriver
  * @brief      This function can be used to override default callback and to define 
- *             custom callback for SCCP1 Timeout event.
+ *             custom callback for SCCP4 Timeout event.
  * @param[in]  handler - Address of the callback function.  
  * @return     none 
  */
-void SCCP1_Timer_TimeoutCallbackRegister(void (*handler)(void));
+void SCCP4_Timer_TimeoutCallbackRegister(void (*handler)(void));
 
 /**
  * @ingroup    timerdriver
  * @brief      This function can be used to override default callback and to define 
- *             custom callback for SCCP1 Timeout event.
+ *             custom callback for SCCP4 Timeout event.
  * @param[in]  handler - Address of the callback function.  
  * @return     none 
  */
-void SCCP1_TimeoutCallbackRegister(void* handler)__attribute__((deprecated("\nThis will be removed in future MCC releases. \nUse SCCP1_Timer_TimeoutCallbackRegister instead. ")));
+void SCCP4_TimeoutCallbackRegister(void* handler)__attribute__((deprecated("\nThis will be removed in future MCC releases. \nUse SCCP4_Timer_TimeoutCallbackRegister instead. ")));
 
 /**
  * @ingroup  timerdriver
  * @brief    This is the default callback with weak attribute. The user can 
  *           override and implement the default callback without weak attribute 
- *           or can register a custom callback function using  \ref SCCP1_Timer_TimeoutCallbackRegister.
+ *           or can register a custom callback function using  \ref SCCP4_Timer_TimeoutCallbackRegister.
  * @param    none
  * @return   none  
  */
-void SCCP1_TimeoutCallback(void);
+void SCCP4_TimeoutCallback(void);
 
 
 #if TIMER_PERIODCOUNTSET_API_SUPPORT
 /**
  * @ingroup  timerdriver
- * @brief    Sets the SCCP1-Timer period count value
- * @pre      \ref SCCP1_Timer_Initialize must be called
+ * @brief    Sets the SCCP4-Timer period count value
+ * @pre      \ref SCCP4_Timer_Initialize must be called
  * @param[in]  count - period value
  * @return   none  
  */
-void SCCP1_Timer_PeriodCountSet(size_t count)__attribute__((deprecated ("\nThis will be removed in future MCC releases. \nUse SCCP1_Timer_PeriodSet instead. ")));
+void SCCP4_Timer_PeriodCountSet(size_t count)__attribute__((deprecated ("\nThis will be removed in future MCC releases. \nUse SCCP4_Timer_PeriodSet instead. ")));
 #endif
-#endif //SCCP1_H
+#endif //SCCP4_H
 
 /**
  End of File

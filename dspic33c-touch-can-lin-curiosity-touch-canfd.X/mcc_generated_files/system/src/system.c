@@ -40,9 +40,10 @@
 #include "../../can/can1.h"
 #include "../dmt.h"
 #include "../../timer/sccp1.h"
-#include "../../timer/tmr1.h"
+#include "../../timer/sccp4.h"
 #include "../../uart/uart3.h"
 #include "../interrupt.h"
+#include "../../touch/touch.h"
 
 
 void SYSTEM_Initialize(void)
@@ -53,10 +54,11 @@ void SYSTEM_Initialize(void)
     CAN1_Initialize();
     DMT_Initialize();
     SCCP1_Timer_Initialize();
-    TMR1_Initialize();
+    SCCP4_Timer_Initialize();
     UART3_Initialize();
     INTERRUPT_GlobalEnable();
     INTERRUPT_Initialize();
+    touch_init();
 }
 
 /**
