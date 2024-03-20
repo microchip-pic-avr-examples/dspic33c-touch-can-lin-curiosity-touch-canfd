@@ -46,6 +46,7 @@
           <itemPath>mcc_generated_files/timer/sccp1.h</itemPath>
           <itemPath>mcc_generated_files/timer/timer_interface.h</itemPath>
           <itemPath>mcc_generated_files/timer/sccp4.h</itemPath>
+          <itemPath>mcc_generated_files/timer/tmr1.h</itemPath>
         </logicalFolder>
         <logicalFolder name="touch" displayName="touch" projectFiles="true">
           <logicalFolder name="example" displayName="example" projectFiles="true">
@@ -57,15 +58,23 @@
             <itemPath>mcc_generated_files/touch/include/qtm_touch_key_0x0002_api.h</itemPath>
             <itemPath>mcc_generated_files/touch/include/qtm_scroller_0x000b_api.h</itemPath>
             <itemPath>mcc_generated_files/touch/include/qtm_acq_cvd_dspic33ck_api.h</itemPath>
+            <itemPath>mcc_generated_files/touch/include/qtm_acq_dspic33c_ptg_0x004d_api.h</itemPath>
           </logicalFolder>
           <itemPath>mcc_generated_files/touch/touch.h</itemPath>
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
           <itemPath>mcc_generated_files/uart/uart_interface.h</itemPath>
-          <itemPath>mcc_generated_files/uart/uart3.h</itemPath>
           <itemPath>mcc_generated_files/uart/uart_types.h</itemPath>
+          <itemPath>mcc_generated_files/uart/uart1.h</itemPath>
         </logicalFolder>
       </logicalFolder>
+    </logicalFolder>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="true">
+      <itemPath>Makefile</itemPath>
+      <itemPath>dspic33ck-curiosity-touch-can-fd-demo.mc3</itemPath>
+      <itemPath>dspic33c-touch-can-lin-curiosity-touch-canfd.mc3</itemPath>
     </logicalFolder>
     <logicalFolder name="LinkerScript"
                    displayName="Linker Files"
@@ -113,6 +122,7 @@
           <logicalFolder name="src" displayName="src" projectFiles="true">
             <itemPath>mcc_generated_files/timer/src/sccp1.c</itemPath>
             <itemPath>mcc_generated_files/timer/src/sccp4.c</itemPath>
+            <itemPath>mcc_generated_files/timer/src/tmr1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
         <logicalFolder name="touch" displayName="touch" projectFiles="true">
@@ -123,18 +133,11 @@
         </logicalFolder>
         <logicalFolder name="uart" displayName="uart" projectFiles="true">
           <logicalFolder name="src" displayName="src" projectFiles="true">
-            <itemPath>mcc_generated_files/uart/src/uart3.c</itemPath>
+            <itemPath>mcc_generated_files/uart/src/uart1.c</itemPath>
           </logicalFolder>
         </logicalFolder>
       </logicalFolder>
       <itemPath>main.c</itemPath>
-    </logicalFolder>
-    <logicalFolder name="ExternalFiles"
-                   displayName="Important Files"
-                   projectFiles="false">
-      <itemPath>Makefile</itemPath>
-      <itemPath>dspic33ck-curiosity-touch-can-fd-demo.mc3</itemPath>
-      <itemPath>dspic33c-touch-can-lin-curiosity-touch-canfd.mc3</itemPath>
     </logicalFolder>
   </logicalFolder>
   <sourceRootList>
@@ -150,21 +153,21 @@
         <targetDevice>dsPIC33CK1024MP710</targetDevice>
         <targetHeader></targetHeader>
         <targetPluginBoard></targetPluginBoard>
-        <platformTool>pkob4hybrid</platformTool>
-        <languageToolchain>XC16</languageToolchain>
-        <languageToolchainVersion>2.10</languageToolchainVersion>
+        <platformTool>noID</platformTool>
+        <languageToolchain>XCDSC</languageToolchain>
+        <languageToolchainVersion>3.00</languageToolchainVersion>
         <platform>3</platform>
       </toolsSet>
       <packs>
-        <pack name="dsPIC33CK-MP_DFP" vendor="Microchip" version="1.10.341"/>
+        <pack name="dsPIC33CK-MP_DFP" vendor="Microchip" version="1.13.366"/>
       </packs>
       <ScriptingSettings>
       </ScriptingSettings>
       <compileType>
         <linkerTool>
           <linkerLibItems>
-            <linkerLibFileItem>mcc_generated_files/touch/libraries/libqtm_acq_dspic33ck_mp_0x004b.X.a</linkerLibFileItem>
             <linkerLibFileItem>mcc_generated_files/touch/libraries/libqtm_scroller_dspic33ckmp_0x000b.X.a</linkerLibFileItem>
+            <linkerLibFileItem>mcc_generated_files/touch/libraries/libqtm_acq_dspic33ck_mp_ptg_0x004d.X.a</linkerLibFileItem>
             <linkerLibFileItem>mcc_generated_files/touch/libraries/libqtm_touch_key_dspic33ckmp_0x0002.X.a</linkerLibFileItem>
           </linkerLibItems>
         </linkerTool>
@@ -208,7 +211,6 @@
         <property key="extra-include-directories" value=""/>
         <property key="isolate-each-function" value="false"/>
         <property key="keep-inline" value="false"/>
-        <property key="oXC16gcc-align-arr" value="false"/>
         <property key="oXC16gcc-cnsts-mauxflash" value="false"/>
         <property key="oXC16gcc-data-sects" value="false"/>
         <property key="oXC16gcc-errata" value=""/>
@@ -291,6 +293,7 @@
         <property key="oXC16ld-nostdlib" value="false"/>
         <property key="oXC16ld-stackguard" value="16"/>
         <property key="preprocessor-macros" value=""/>
+        <property key="psv-override" value="false"/>
         <property key="remove-unused-sections" value="false"/>
         <property key="report-memory-usage" value="true"/>
         <property key="secure-eeprom" value="no_eeprom"/>
@@ -365,6 +368,7 @@
         <property key="SPI 1" value="true"/>
         <property key="SPI 2" value="true"/>
         <property key="SPI 3" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="TIMER1" value="true"/>
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
@@ -380,7 +384,11 @@
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.simultaneous.debug" value="false"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
+        <property key="event.recorder.enabled" value="false"/>
+        <property key="event.recorder.scvd.files" value=""/>
         <property key="freeze.timers" value="false"/>
+        <property key="lastid" value=""/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -411,6 +419,7 @@
         <property key="programoptions.program.otpconfig" value="false"/>
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.smart.program" value="When debugging only"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="toolpack.updateoptions"
                   value="toolpack.updateoptions.uselatestoolpack"/>
@@ -464,6 +473,7 @@
         <property key="SPI 1" value="true"/>
         <property key="SPI 2" value="true"/>
         <property key="SPI 3" value="true"/>
+        <property key="SecureSegment.SegmentProgramming" value="FullChipProgramming"/>
         <property key="TIMER1" value="true"/>
         <property key="ToolFirmwareFilePath"
                   value="Press to browse for a specific firmware version"/>
@@ -479,7 +489,11 @@
         <property key="debugoptions.reset-behaviour" value="Use system settings"/>
         <property key="debugoptions.simultaneous.debug" value="false"/>
         <property key="debugoptions.useswbreakpoints" value="false"/>
+        <property key="event.recorder.debugger.behavior" value="Running"/>
+        <property key="event.recorder.enabled" value="false"/>
+        <property key="event.recorder.scvd.files" value=""/>
         <property key="freeze.timers" value="false"/>
+        <property key="lastid" value=""/>
         <property key="memories.aux" value="false"/>
         <property key="memories.bootflash" value="true"/>
         <property key="memories.configurationmemory" value="true"/>
@@ -508,6 +522,7 @@
         <property key="programoptions.program.otpconfig" value="false"/>
         <property key="programoptions.programcalmem" value="false"/>
         <property key="programoptions.programuserotp" value="false"/>
+        <property key="programoptions.smart.program" value="When debugging only"/>
         <property key="programoptions.testmodeentrymethod" value="VDDFirst"/>
         <property key="toolpack.updateoptions"
                   value="toolpack.updateoptions.uselatestoolpack"/>

@@ -1,21 +1,21 @@
 /**
- * UART3 Generated Driver Header File
+ * UART1 Generated Driver Header File
  * 
- * @file      uart3.h
+ * @file      uart1.h
  *            
  * @ingroup   uartdriver
  *            
- * @brief     This is the generated driver header file for the UART3 driver
+ * @brief     This is the generated driver header file for the UART1 driver
  *            
- * @skipline @version   Firmware Driver Version 1.6.1
+ * @skipline @version   Firmware Driver Version 1.7.0
  *
- * @skipline @version   PLIB Version 1.4.1
+ * @skipline @version   PLIB Version 1.5.0
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -35,8 +35,8 @@
     THIS SOFTWARE.
 */
 
-#ifndef UART3_H
-#define UART3_H
+#ifndef UART1_H
+#define UART1_H
 
 // Section: Included Files
 
@@ -57,111 +57,111 @@
            using the 'Custom Name' field. Application specific name allows the 
            API Portability.
 */
-extern const struct UART_INTERFACE DebugUART;
+extern const struct UART_INTERFACE DebugUart;
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_Initialize API
+ * @brief    This macro defines the Custom Name for \ref UART1_Initialize API
  */
-#define DebugUART_Initialize UART3_Initialize
+#define DebugUart_Initialize UART1_Initialize
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_Deinitialize API
+ * @brief    This macro defines the Custom Name for \ref UART1_Deinitialize API
  */
-#define DebugUART_Deinitialize UART3_Deinitialize
+#define DebugUart_Deinitialize UART1_Deinitialize
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_Read API
+ * @brief    This macro defines the Custom Name for \ref UART1_Read API
  */
-#define DebugUART_Read UART3_Read
+#define DebugUart_Read UART1_Read
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_Write API
+ * @brief    This macro defines the Custom Name for \ref UART1_Write API
  */
-#define DebugUART_Write UART3_Write
+#define DebugUart_Write UART1_Write
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_IsRxReady API
+ * @brief    This macro defines the Custom Name for \ref UART1_IsRxReady API
  */
-#define DebugUART_IsRxReady UART3_IsRxReady
+#define DebugUart_IsRxReady UART1_IsRxReady
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_IsTxReady API
+ * @brief    This macro defines the Custom Name for \ref UART1_IsTxReady API
  */
-#define DebugUART_IsTxReady UART3_IsTxReady
+#define DebugUart_IsTxReady UART1_IsTxReady
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_IsTxDone API
+ * @brief    This macro defines the Custom Name for \ref UART1_IsTxDone API
  */
-#define DebugUART_IsTxDone UART3_IsTxDone
+#define DebugUart_IsTxDone UART1_IsTxDone
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_TransmitEnable API
+ * @brief    This macro defines the Custom Name for \ref UART1_TransmitEnable API
  */
-#define DebugUART_TransmitEnable UART3_TransmitEnable
+#define DebugUart_TransmitEnable UART1_TransmitEnable
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_TransmitDisable API
+ * @brief    This macro defines the Custom Name for \ref UART1_TransmitDisable API
  */
-#define DebugUART_TransmitDisable UART3_TransmitDisable
+#define DebugUart_TransmitDisable UART1_TransmitDisable
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_AutoBaudSet API
+ * @brief    This macro defines the Custom Name for \ref UART1_AutoBaudSet API
  */
-#define DebugUART_AutoBaudSet UART3_AutoBaudSet
+#define DebugUart_AutoBaudSet UART1_AutoBaudSet
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_AutoBaudQuery API
+ * @brief    This macro defines the Custom Name for \ref UART1_AutoBaudQuery API
  */
-#define DebugUART_AutoBaudQuery UART3_AutoBaudQuery
+#define DebugUart_AutoBaudQuery UART1_AutoBaudQuery
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_AutoBaudEventEnableGet API
+ * @brief    This macro defines the Custom Name for \ref UART1_AutoBaudEventEnableGet API
  */
-#define DebugUART_AutoBaudEventEnableGet UART3_AutoBaudEventEnableGet
+#define DebugUart_AutoBaudEventEnableGet UART1_AutoBaudEventEnableGet
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_ErrorGet API
+ * @brief    This macro defines the Custom Name for \ref UART1_ErrorGet API
  */
-#define DebugUART_ErrorGet UART3_ErrorGet
+#define DebugUart_ErrorGet UART1_ErrorGet
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_BRGCountSet API
+ * @brief    This macro defines the Custom Name for \ref UART1_BRGCountSet API
  */
-#define DebugUART_BRGCountSet UART3_BRGCountSet
+#define DebugUart_BRGCountSet UART1_BRGCountSet
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_BRGCountGet API
+ * @brief    This macro defines the Custom Name for \ref UART1_BRGCountGet API
  */
-#define DebugUART_BRGCountGet UART3_BRGCountGet
+#define DebugUart_BRGCountGet UART1_BRGCountGet
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_BaudRateSet API
+ * @brief    This macro defines the Custom Name for \ref UART1_BaudRateSet API
  */
-#define DebugUART_BaudRateSet UART3_BaudRateSet
+#define DebugUart_BaudRateSet UART1_BaudRateSet
 
 /**
  * @ingroup  uartdriver
- * @brief    This macro defines the Custom Name for \ref UART3_BaudRateGet API
+ * @brief    This macro defines the Custom Name for \ref UART1_BaudRateGet API
  */
-#define DebugUART_BaudRateGet UART3_BaudRateGet
+#define DebugUart_BaudRateGet UART1_BaudRateGet
 
-// Section: UART3 Driver Routines
+// Section: UART1 Driver Routines
 
 /**
  * @ingroup  uartdriver
@@ -169,7 +169,7 @@ extern const struct UART_INTERFACE DebugUART;
  * @param    none
  * @return   none
  */
-void UART3_Initialize(void);
+void UART1_Initialize(void);
 
 /**
  * @ingroup  uartdriver
@@ -177,29 +177,29 @@ void UART3_Initialize(void);
  * @param    none
  * @return   none
  */
-void UART3_Deinitialize(void);
+void UART1_Deinitialize(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Reads a byte of data from the UART3
- * @pre      UART3_Initialize function should have been called
+ * @brief    Reads a byte of data from the UART1
+ * @pre      UART1_Initialize function should have been called
  *           before calling this function. The transfer status should be checked
  *           to see  if the receiver is not empty before calling this function.
  * @param    none
  * @return   A data byte received by the driver
  */
-uint8_t UART3_Read(void);
+uint8_t UART1_Read(void);
 
 /**
  * @ingroup    uartdriver
- * @brief      Writes a byte of data to the UART3
- * @pre        UART3_Initialize function should have been called
+ * @brief      Writes a byte of data to the UART1
+ * @pre        UART1_Initialize function should have been called
  *             before calling this function. The transfer status should be checked
  *             to see if transmitter is not full before calling this function.
- * @param[in]  data - Data byte to write to the UART3
+ * @param[in]  data - Data byte to write to the UART1
  * @return     none
  */
-void UART3_Write(uint8_t data);
+void UART1_Write(uint8_t data);
 
 /**
  * @ingroup  uartdriver
@@ -208,7 +208,7 @@ void UART3_Write(uint8_t data);
  * @return   true  - Data available to read
  * @return   false - Data not available to read
  */
-bool UART3_IsRxReady(void);
+bool UART1_IsRxReady(void);
 
 /**
  * @ingroup  uartdriver
@@ -217,7 +217,7 @@ bool UART3_IsRxReady(void);
  * @return   true    - Data can be written
  * @return   false   - Data can not be written
  */
-bool UART3_IsTxReady(void);
+bool UART1_IsTxReady(void);
 
 /**
  * @ingroup  uartdriver
@@ -226,32 +226,32 @@ bool UART3_IsTxReady(void);
  * @return   true    - All bytes transferred
  * @return   false   - Data transfer is pending
  */
-bool UART3_IsTxDone(void);
+bool UART1_IsTxDone(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Enables UART3 transmit 
+ * @brief    Enables UART1 transmit 
  * @param    none
  * @return   none
  */
-void UART3_TransmitEnable(void);
+void UART1_TransmitEnable(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Disables UART3 transmit 
+ * @brief    Disables UART1 transmit 
  * @param    none
  * @return   none
  */
-void UART3_TransmitDisable(void);
+void UART1_TransmitDisable(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Enables or disables UART3 Auto-Baud detection
+ * @brief    Enables or disables UART1 Auto-Baud detection
  * @param[in]  enable - true, starts the auto-baud detection  
  * @param[in]  enable - false, disables the auto-baud detection  
  * @return   none
  */
-void UART3_AutoBaudSet(bool enable);
+void UART1_AutoBaudSet(bool enable);
 
 /**
  * @ingroup  uartdriver
@@ -260,7 +260,7 @@ void UART3_AutoBaudSet(bool enable);
  * @return   true    - Auto-Baud detection in progress or counter overflow occurred
  * @return   false   - Auto-Baud detection is complete or disabled
  */
-bool UART3_AutoBaudQuery(void);
+bool UART1_AutoBaudQuery(void);
 
 /**
  * @ingroup  uartdriver
@@ -269,49 +269,49 @@ bool UART3_AutoBaudQuery(void);
  * @return   true    - Auto-Baud is enabled
  * @return   false   - Auto-Baud is disabled
  */
-bool UART3_AutoBaudEventEnableGet(void);
+bool UART1_AutoBaudEventEnableGet(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Sets the BRG value of UART3
+ * @brief    Sets the BRG value of UART1
  * @param[in]   baudRate - BRG value upto 20 bits   
  * @return   none
- * @note    Make sure the is no transmission in progress using \ref UART3_IsTxDone function
+ * @note    Make sure the is no transmission in progress using \ref UART1_IsTxDone function
  */
-void UART3_BRGCountSet(uint32_t brgValue);
+void UART1_BRGCountSet(uint32_t brgValue);
 
 /**
  * @ingroup  uartdriver
- * @brief    Gets the BRG value of UART3
+ * @brief    Gets the BRG value of UART1
  * @param    none
  * @return   Combined BRG value upto 20 bits
  */
-uint32_t UART3_BRGCountGet(void);
+uint32_t UART1_BRGCountGet(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Sets the calculated Baud-Rate of UART3
+ * @brief    Sets the calculated Baud-Rate of UART1
  * @param[in]   baudRate - Value of Baud-Rate to be set  
  * @return   none
- * @note    Make sure the is no transmission in progress using \ref UART3_IsTxDone function
+ * @note    Make sure the is no transmission in progress using \ref UART1_IsTxDone function
  */
-void UART3_BaudRateSet(uint32_t baudRate);
+void UART1_BaudRateSet(uint32_t baudRate);
 
 /**
  * @ingroup  uartdriver
- * @brief    Gets the actual Baud-Rate of UART3
+ * @brief    Gets the actual Baud-Rate of UART1
  * @param    none
- * @return   Actual baud-rate of UART3
+ * @return   Actual baud-rate of UART1
  */
-uint32_t UART3_BaudRateGet(void);
+uint32_t UART1_BaudRateGet(void);
 
 /**
  * @ingroup  uartdriver
- * @brief    Returns the error status of UART3
+ * @brief    Returns the error status of UART1
  * @param    none
- * @return   Errors with masking as per \ref UART3_ERROR_MASKS
+ * @return   Errors with masking as per \ref UART1_ERROR_MASKS
  */
-size_t UART3_ErrorGet(void);
+size_t UART1_ErrorGet(void);
 
-#endif  // UART3_H
+#endif  // UART1_H
 

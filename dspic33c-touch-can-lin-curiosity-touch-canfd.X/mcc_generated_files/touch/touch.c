@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library 3.0.0 Release
+  Touch Library 4.0.0 Release
 
   @Company
     Microchip Technology Inc.
@@ -17,7 +17,7 @@
 	
 *******************************************************************************/
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -44,7 +44,7 @@
  *----------------------------------------------------------------------------*/
 #include "touch.h" 
 #include "../system/clock.h"
-#include "../timer/sccp4.h"
+#include "../timer/tmr1.h"
 
 
 /*----------------------------------------------------------------------------
@@ -71,6 +71,10 @@ static void qtm_error_callback(uint8_t error);
  */
 static void touch_timer_config(void);
 
+/*! \brief Device config.
+ */
+static touch_ret_t touch_device_config(void);
+
 /*----------------------------------------------------------------------------
  *     Global Variables
  *----------------------------------------------------------------------------*/
@@ -83,34 +87,40 @@ volatile uint8_t touch_postprocess_request = 0;
 /* Measurement Done Touch Flag  */
 volatile uint8_t measurement_done_touch = 0;
 
+/* track touch in progress flag */
+volatile uint8_t touch_in_progress = 0u;
+
 /* Error Handling */
-uint8_t module_error_code = 0;
+volatile uint8_t module_error_code = 0;
 
 /* Acquisition module internal data - Size to largest acquisition set */
 
-uint16_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+uint32_t touch_acq_signals_raw[DEF_NUM_CHANNELS];
+uint16_t touch_acq_scanA_signals[DEF_NUM_CHANNELS];
+uint16_t touch_acq_scanB_signals[DEF_NUM_CHANNELS];
+uint16_t touch_cvd_scan_data[2u * (1u<<FILTER_LEVEL_64)]; /* memory of size (max oversampling of all channels * 2) */
 
 /* Acquisition set 1 - General settings */
-qtm_acq_node_group_config_t adc_qtlib_acq_gen1
-        = {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT,DEF_ADC_INT_PRIORITY};
+qtm_acq_node_group_config_t adc_qtlib_acq_gen1 = 
+    {DEF_NUM_CHANNELS, DEF_SENSOR_TYPE, DEF_SEL_FREQ_INIT};
 
 /* Node status, signal, calibration values */
 qtm_acq_node_data_t adc_qtlib_node_stat1[DEF_NUM_CHANNELS];
 
 /* Node configurations */
-qtm_cvd_acq_dspic33ck_node_config_t adc_seq_node_cfg1[DEF_NUM_CHANNELS] = { NODE_0_PARAMS, NODE_1_PARAMS,NODE_2_PARAMS};
+qtm_acq_dspic33c_node_config_t adc_seq_node_cfg1[DEF_NUM_CHANNELS] = { NODE_0_PARAMS, NODE_1_PARAMS,NODE_2_PARAMS};
 
-qtm_cvd_acq_dspic33ck_device_config_t adc_clk_info = {
-    .clk_freq = CLOCK_InstructionFrequencyGet(),
-    .clk_src = FVCO_DIV4,
+qtm_acq_dspic33c_device_config_t device_config = {
+    .adc_clk_src = FOSC,
     .device_id = DSPIC33_DEVICE_IDENTIFIER,
-    .ext_clk_freq =200      
+    .cvd_scan_data_ptr = &touch_cvd_scan_data[0u],
+    .partner_adc_channel = CVD_PARTNER_ADC_CHANNEL
 };
 /* Container */
 qtm_acquisition_control_t qtlib_acq_set1 = {    .qtm_acq_node_group_config = &adc_qtlib_acq_gen1,
     .qtm_acq_node_config = &adc_seq_node_cfg1[0],
     .qtm_acq_node_data = &adc_qtlib_node_stat1[0],
-    .qtm_acq_device_info = &adc_clk_info    };
+    .qtm_acq_device_config = &device_config    };
 /**********************************************************/
 /*********************** Keys Module **********************/
 /**********************************************************/
@@ -185,7 +195,7 @@ static touch_ret_t touch_sensors_config(void)
     else
     {
         /* Init pointers to DMA sequence memory */
-        touch_ret = qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0]);
+        touch_ret = qtm_cvd_qtlib_assign_signal_memory(&touch_acq_signals_raw[0u]);
 
     	/* Initialize sensor nodes */
     	for (sensor_nodes = 0u; sensor_nodes < DEF_NUM_CHANNELS; sensor_nodes++) {
@@ -269,7 +279,168 @@ static void qtm_error_callback(uint8_t error)
     }
 
 }
+/*============================================================================
+static void touch_device_config(void)
+------------------------------------------------------------------------------
+Purpose: To set Device configurations
+Input  : none
+Output : none
+Notes  :  1. The touch_calculate_frequency function will calculate and update the adc_clk_src_freq, dma_transfer_delay, and sccp_drive_delay of device_config structure.
+          2. The sccp_drive_delay is calculated such that the shield is driven shortly after the start of charge share.  
+          3. If required, adjust sccp_drive_delay by checking the delay between start of charge share and shield drive using oscilloscope. Ensure that shield is not driven before start of charge share.          
+ ============================================================================*/
+static touch_ret_t touch_device_config(void)
+{
+    uint32_t adc_clk_src_frequency = 0uL;
+    uint32_t fvco_frequency = 0uL;
+    uint16_t pll_pre = CLKDIVbits.PLLPRE;
+    uint16_t pll_fbd = PLLFBD;
+    uint16_t local_nosc = OSCCONbits.NOSC;
+    uint32_t peripheral_clk_frequency = 0uL; 
+    uint32_t core_adc_clk_freq = 0uL;
+    uint32_t adc_core_src_frequency = 0uL;
+    uint32_t core_clkdiv = 1uL; 
+    uint8_t apll_avcodiv = 0u;
+    uint8_t delay_mod_val = 0u;
+    adc_clock_src_t adc_clock_src = device_config.adc_clk_src;
+    touch_ret_t touch_ret = TOUCH_SUCCESS;
+    
+    /* SCCP and DMA clock source is Fp (FOSC/2) */
+    peripheral_clk_frequency = CLOCK_PeripheralFrequencyGet();
+    
+    #if defined (_APLLPRE) 
+    /* read Aux PLL settings */
+    if(adc_clock_src == AFVCODIV)
+    {
+        pll_pre = _APLLPRE;
+        pll_fbd = APLLFBD1;
+        apll_avcodiv = _AVCODIV; 
+    }
+    #endif
 
+    /* calculate frequency */
+    if(adc_clock_src == FOSC)
+    {
+        adc_clk_src_frequency = CLOCK_SystemFrequencyGet();
+    }
+    else if(adc_clock_src == PERIPHERAL_CLK)
+    {
+        adc_clk_src_frequency = CLOCK_PeripheralFrequencyGet();
+    }
+    else if(adc_clock_src == INSTRUCTION_CLK)
+    {
+        adc_clk_src_frequency = CLOCK_InstructionFrequencyGet();
+    }
+    else if((adc_clock_src == FVCO_DIV4) || (adc_clock_src == FVCO_DIV3) || (adc_clock_src == AFVCODIV))
+    {
+        if (pll_pre == 0u)
+        {
+            pll_pre = 1u; /* avoid divide by 0 */
+        }
+        if (pll_fbd == 0u)
+        {
+            pll_fbd = 1u; /* avoid divide by 0 */
+        }
+        
+        if (local_nosc == 3u) /* Primary Oscillator with PLL */
+        {
+            #if defined (EXT_CLK_FREQ) 
+            fvco_frequency = (EXT_CLK_FREQ * (pll_fbd & 0x00ffu)) / pll_pre;
+            #endif
+        }
+        else
+        {
+            #if defined (FRC_CLK_FREQ) 
+            fvco_frequency = (FRC_CLK_FREQ * (pll_fbd & 0x00ffu)) / pll_pre;
+            #endif
+        }
+        
+        if(adc_clock_src == FVCO_DIV4)
+        {
+            adc_clk_src_frequency = fvco_frequency / 4u;
+        }
+        else if (adc_clock_src == FVCO_DIV3)
+        {
+            adc_clk_src_frequency = fvco_frequency / 3u;
+        }
+		else if (adc_clock_src == AFVCODIV)
+        {
+            adc_clk_src_frequency = fvco_frequency/ (4u - apll_avcodiv);
+        }
+        else
+        {
+            /* invalid */
+        }
+
+    }
+    else
+    {
+        /* invalid */
+    }
+    /* set adc clock source frequency (FSRC) */
+    device_config.adc_clk_src_freq = adc_clk_src_frequency;
+    
+    if(adc_clk_src_frequency > MAX_INPUT_ADC_CLK_FREQ)
+    {
+        touch_ret = TOUCH_INVALID_INPUT_PARAM;
+    }
+    else 
+    {
+        if (adc_clk_src_frequency > MAX_CORESRC_ADC_CLK_FREQ)
+        {
+            /* The ADC Core source Clock (FCORESRC)*/
+            adc_core_src_frequency = adc_clk_src_frequency >> 1uL; /* divide by 2 */
+        }
+        else
+        {
+            /* The ADC Core source Clock (FCORESRC) */
+            adc_core_src_frequency = adc_clk_src_frequency;
+        }
+       
+        
+        /*
+        * Identifying the sccp drive delay and DMA transfer delay
+        */
+        /* minimum Shared ADC Core Clock Divider */
+        core_clkdiv = 1u; /* divider = 2 when value is 0 or 1 */
+        /* The Shared ADC Core Clock */
+        core_adc_clk_freq = adc_core_src_frequency >> 1uL;
+
+        /* loop until the required core divider is found */
+        /* the actual divider is twice of the register set value */
+        while (core_adc_clk_freq > (uint32_t)MAX_SHARED_ADC_CLK_FREQ )
+        {
+            /* increment the divider - actual divider is twice */
+            core_clkdiv++;  
+            /* divide by core divider - actual divider is twice */
+            core_adc_clk_freq = (adc_core_src_frequency / (uint32_t)(core_clkdiv << 1uL));
+        }
+        
+        /* Peripheral clock frequency(Fp) must not be lesser than the Core ADC frequency(FADCORE) */
+        if(peripheral_clk_frequency < core_adc_clk_freq)
+        {
+            touch_ret = TOUCH_INVALID_INPUT_PARAM;
+        }
+        else
+        {
+            /* DMA transfer delay required in ADC core cycles  - 3 DMA clocks */ 
+            device_config.dma_transfer_delay = (uint8_t)(ceil((((double)DEF_DMA_TRANSFER_TIME * (double)core_adc_clk_freq)/(double)peripheral_clk_frequency))) ;
+
+            /* shield drive(sccp) delay required( in SCCP clocks)  = (dma_transfer_delay + DEF_PTG_STROBE_DELAY) ADC core clock */
+            device_config.sccp_drive_delay = (uint8_t)(ceil(((double)(device_config.dma_transfer_delay + DEF_PTG_STROBE_TIME) * (double)(peripheral_clk_frequency)) /(double)core_adc_clk_freq));
+
+            /* If the calculated delays are exact multiple of define values then there is a possibility of shield driven before start of charge share */
+            delay_mod_val = (device_config.sccp_drive_delay % DEF_PTG_STROBE_TIME) | (device_config.dma_transfer_delay % DEF_DMA_TRANSFER_TIME);
+            if(delay_mod_val == 0u)
+            {
+                /* Incrementing SCCP delay by one to avoid shield driven before charge share */
+                device_config.sccp_drive_delay  += 1u;
+            }
+        }
+    }
+    
+    return touch_ret;
+}
 /*============================================================================
 void touch_timer_config(void)
 ------------------------------------------------------------------------------
@@ -280,9 +451,9 @@ Notes  :
 ============================================================================*/
 static void touch_timer_config(void)
 {  
-    Timer.Stop();
-    Timer.TimeoutCallbackRegister(touch_timer_handler); 
-    Timer.Start();
+    TMR1_Stop();
+    TMR1_TimeoutCallbackRegister(touch_timer_handler); 
+    TMR1_Start();
 
 }
 /*============================================================================
@@ -296,11 +467,34 @@ Notes  :
 ============================================================================*/
 void touch_init(void)
 {
+   touch_ret_t touch_ret = TOUCH_SUCCESS;
+   
+   /* set device configurations */
+    touch_ret = touch_device_config();
+    
+     if (TOUCH_SUCCESS != touch_ret)
+    {
+        /* Acq module Error Detected */
+        qtm_error_callback(0x81);
+    }
     
     touch_timer_config();
 
-	/* Configure touch sensors with Application specific settings */
-	touch_sensors_config();
+	    /* Configure touch sensors with Application specific settings */
+    touch_ret = touch_sensors_config();
+     if (TOUCH_SUCCESS != touch_ret)
+        {
+            /* Acq module Error Detected: Issue an Acq module common error code 0x80 */
+            qtm_error_callback(0x81);
+        }
+    
+    /* Set Freq Hop Time scale */
+	touch_ret = qtm_update_acq_freq_delay(qtlib_acq_set1.qtm_acq_node_group_config->freq_option_select, DEF_FREQ_HOP_TIME_SCALE);
+    if (TOUCH_SUCCESS != touch_ret)
+    {
+            /* Acq module Error Detected: Issue an Acq module common error code 0x80 */
+            qtm_error_callback(0x81);
+    }
 	
 }
 
@@ -316,12 +510,13 @@ Notes  :
 ============================================================================*/
 void touch_process(void)
 {
-    touch_ret_t touch_ret;
+    touch_ret_t touch_ret = TOUCH_SUCCESS;
 
 
     /* check the time_to_measure_touch for Touch Acquisition */
-    if (time_to_measure_touch_flag == 1u)
-	{
+    if ((time_to_measure_touch_flag == 1u) && (touch_in_progress == 0u) && (touch_postprocess_request==0u))
+    {
+
         /* Do the acquisition */
         touch_ret = qtm_cvd_start_measurement_seq(&qtlib_acq_set1, qtm_measure_complete_callback);
 
@@ -329,6 +524,8 @@ void touch_process(void)
         if (TOUCH_SUCCESS == touch_ret) {
             /* Clear the Measure request flag */
 			time_to_measure_touch_flag = 0u;
+            /* set in progress flag */
+            touch_in_progress = 1u;
         }
         else
         {
@@ -338,6 +535,8 @@ void touch_process(void)
     }
     /* check the flag for node level post processing */
     if (touch_postprocess_request == 1u){
+        /* clear in progress flag */
+        touch_in_progress = 0u;
         /* Reset the flags for node_level_post_processing */
         touch_postprocess_request = 0u;
         /* Run Acquisition module level post processing*/
@@ -465,16 +664,22 @@ uint16_t get_scroller_position(uint16_t sensor_node)
 
 
 /*============================================================================
-ISR(ADC)
+ISR(PTG)
 ------------------------------------------------------------------------------
-Purpose:  Interrupt handler for ADC / EOC Interrupt
+Purpose  :  Interrupt handler for PTG Interrupt
 Input    :  none
-Output  :  none
-Notes    :  none
+Output   :  none
+Notes    :  This interrupt is called when all CVD conversions for one channel are completed. 
 ============================================================================*/
-void __attribute__((__interrupt__, auto_psv, weak)) _ADCInterrupt(void)
+void __attribute__((interrupt, no_auto_psv)) _PTG0Interrupt()
 {
+    /* get the channel number first. execute the handler and then read the scanA and scanB */
+    volatile uint16_t channel_number = qtm_get_current_measure_channel();
+    
+    qtm_dspic33c_touch_handler_eoc();
+    
+    touch_acq_scanA_signals[channel_number] = qtm_cvd_get_scanA_signal();
+    touch_acq_scanB_signals[channel_number] = qtm_cvd_get_scanB_signal();
 
-    qtm_dspic33_touch_handler_eoc();
 }
 #endif /* TOUCH_C */

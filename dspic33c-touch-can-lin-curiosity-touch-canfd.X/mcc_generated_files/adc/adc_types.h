@@ -9,13 +9,13 @@
  *            
  * @skipline @version   Firmware Driver Version 1.4.4
  *
- * @skipline @version   PLIB Version 2.4.2
+ * @skipline @version   PLIB Version 2.4.3
  *            
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -111,14 +111,14 @@ enum ADC_CMP
 */
 enum ADC_PWM_INSTANCE
 {
-    ADC_PWM_GENERATOR_1 = 1,     /**< PWM name:PWM_GENERATOR_1 */
-    ADC_PWM_GENERATOR_2 = 2,     /**< PWM name:PWM_GENERATOR_2 */
-    ADC_PWM_GENERATOR_3 = 3,     /**< PWM name:PWM_GENERATOR_3 */
-    ADC_PWM_GENERATOR_4 = 4,     /**< PWM name:PWM_GENERATOR_4 */
-    ADC_PWM_GENERATOR_5 = 5,     /**< PWM name:PWM_GENERATOR_5 */
-    ADC_PWM_GENERATOR_6 = 6,     /**< PWM name:PWM_GENERATOR_6 */
-    ADC_PWM_GENERATOR_7 = 7,     /**< PWM name:PWM_GENERATOR_7 */
-    ADC_PWM_GENERATOR_8 = 8,     /**< PWM name:PWM_GENERATOR_8 */
+    ADC_PWM_GENERATOR_8,    /**< PWM name:PWM_GENERATOR_8 */
+    ADC_PWM_GENERATOR_7,    /**< PWM name:PWM_GENERATOR_7 */
+    ADC_PWM_GENERATOR_6,    /**< PWM name:PWM_GENERATOR_6 */
+    ADC_PWM_GENERATOR_5,    /**< PWM name:PWM_GENERATOR_5 */
+    ADC_PWM_GENERATOR_4,    /**< PWM name:PWM_GENERATOR_4 */
+    ADC_PWM_GENERATOR_3,    /**< PWM name:PWM_GENERATOR_3 */
+    ADC_PWM_GENERATOR_2,    /**< PWM name:PWM_GENERATOR_2 */
+    ADC_PWM_GENERATOR_1,    /**< PWM name:PWM_GENERATOR_1 */
 };
 
 /**
