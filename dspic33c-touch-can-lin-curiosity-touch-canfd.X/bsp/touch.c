@@ -32,7 +32,16 @@ void TOUCH_Initialize(void)
 
 uint16_t TOUCH_PositionValueGet(void)
 {
-    return scroller_position;
+    uint16_t positionValue;
+    if (0u != scroller_status)
+    {
+        positionValue = scroller_position;
+    }
+    else
+    {
+        positionValue = 0; 
+    }
+    return positionValue;
 }
 
 enum TOUCH_PADS TOUCH_PadPositionGet(void)

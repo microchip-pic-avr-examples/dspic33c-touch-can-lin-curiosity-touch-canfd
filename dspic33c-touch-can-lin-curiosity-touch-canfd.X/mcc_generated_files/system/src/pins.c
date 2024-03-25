@@ -60,7 +60,7 @@ void PINS_Initialize(void)
      ***************************************************************************/
     TRISA = 0x01FF;
     TRISB = 0xABFF;
-    TRISC = 0xFFFF;
+    TRISC = 0x7FFF;
     TRISD = 0x7FFF;
     TRISE = 0xFC3F;
     TRISF = 0xF7FF;
@@ -110,7 +110,9 @@ void PINS_Initialize(void)
      __builtin_write_RPCON(0x0000); // unlock PPS
 
         RPINR18bits.U1RXR = 0x002F; //RB15->UART1:U1RX;
+        RPINR26bits.CAN1RXR = 0x003E; //RC14->CAN1:CAN1RX;
         RPOR7bits.RP46R = 0x0001;  //RB14->UART1:U1TX;
+        RPOR15bits.RP63R = 0x0015;  //RC15->CAN1:CAN1TX;
 
      __builtin_write_RPCON(0x0800); // lock PPS
 

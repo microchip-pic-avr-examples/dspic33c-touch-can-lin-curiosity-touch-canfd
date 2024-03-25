@@ -72,7 +72,7 @@
 /* The pin must be from PortB or PortC or PortD */
 /* This pin must be left unconnected */
 /* Range - 0u to 31u */
-#define CVD_PARTNER_ADC_CHANNEL            12 
+#define CVD_PARTNER_ADC_CHANNEL            11 
 /* Set default bootup acquisition frequency.
  * Range: FREQ_SEL_0 - FREQ_SEL_15 , FREQ_SEL_SPREAD
  * Default value: FREQ_SEL_0.
@@ -146,15 +146,15 @@
  */
 #define KEY_0_PARAMS                                                                                            \
 {                                                                                                              \
-    50, HYST_25, NO_AKS_GROUP                       \
+    20, HYST_25, NO_AKS_GROUP                       \
 }
 #define KEY_1_PARAMS                                                                                            \
 {                                                                                                              \
-    50, HYST_25, NO_AKS_GROUP                       \
+    20, HYST_25, NO_AKS_GROUP                       \
 }
 #define KEY_2_PARAMS                                                                                            \
 {                                                                                                              \
-    50, HYST_25, NO_AKS_GROUP                       \
+    20, HYST_25, NO_AKS_GROUP                       \
 }
 
 /* De-bounce counter for additional measurements to confirm touch detection
