@@ -9,13 +9,13 @@
  *            
  * @skipline @version   Firmware Driver Version 1.4.4
  *
- * @skipline @version   PLIB Version 2.4.2
+ * @skipline @version   PLIB Version 2.4.3
  *           
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -118,8 +118,8 @@ void ADC1_Initialize (void)
     ADCON1H = 0x60;
     // SHRADCS 2; SHREISEL Early interrupt is generated 1 TADCORE clock prior to data being ready; PTGEN disabled; EIEN disabled; REFERCIE disabled; REFCIE disabled; 
     ADCON2L = 0x0;
-    // SHRSAMC 0; CVDCAP disabled; 
-    ADCON2H = 0x0;
+    // SHRSAMC 48; CVDCAP disabled; 
+    ADCON2H = 0x30;
     // CNVCHSEL AN0; SWCTRG disabled; SWLCTRG disabled; SHRSAMP disabled; SUSPCIE disabled; SUSPEND disabled; REFSEL disabled; 
     ADCON3L = 0x0;
     // C0EN enabled; C1EN disabled; C2EN disabled; C3EN disabled; SHREN disabled; CLKDIV 1; CLKSEL FOSC/2; 
@@ -204,8 +204,8 @@ void ADC1_Initialize (void)
     ADLVLTRGL = 0x0;
     // LVLEN16 disabled; LVLEN17 disabled; LVLEN18 disabled; LVLEN27 disabled; LVLEN28 disabled; LVLEN29 disabled; LVLEN30 disabled; LVLEN31 disabled; LVLEN19 disabled; LVLEN20 disabled; LVLEN21 disabled; LVLEN22 disabled; LVLEN23 disabled; LVLEN24 disabled; LVLEN25 disabled; LVLEN26 disabled; 
     ADLVLTRGH = 0x0;
-    // SAMC 8; 
-    ADCORE0L = 0x8;
+    // SAMC 248; 
+    ADCORE0L = 0xF8;
     // SAMC 0x0; 
     ADCORE1L = 0x0;
     // SAMC 0x0; 
@@ -486,67 +486,17 @@ static uint16_t ADC1_TriggerSourceValueGet(enum ADC_PWM_INSTANCE pwmInstance, en
     uint16_t adcTriggerSourceValue = 0x0U;
     switch(pwmInstance)
     {
-        case 1:
+        case ADC_PWM_GENERATOR_8:
                 if(triggerNumber == ADC_PWM_TRIGGER_1)
                 {
-                    adcTriggerSourceValue = PWM1_TRIGGER1;
+                    adcTriggerSourceValue = PWM8_TRIGGER1;
                 }
                 else if(triggerNumber == ADC_PWM_TRIGGER_2)
                 {
-                    adcTriggerSourceValue = PWM1_TRIGGER2;
+                    adcTriggerSourceValue = PWM8_TRIGGER2;
                 }
                 break;
-        case 2:
-                if(triggerNumber == ADC_PWM_TRIGGER_1)
-                {
-                    adcTriggerSourceValue = PWM2_TRIGGER1;
-                }
-                else if(triggerNumber == ADC_PWM_TRIGGER_2)
-                {
-                    adcTriggerSourceValue = PWM2_TRIGGER2;
-                }
-                break;
-        case 3:
-                if(triggerNumber == ADC_PWM_TRIGGER_1)
-                {
-                    adcTriggerSourceValue = PWM3_TRIGGER1;
-                }
-                else if(triggerNumber == ADC_PWM_TRIGGER_2)
-                {
-                    adcTriggerSourceValue = PWM3_TRIGGER2;
-                }
-                break;
-        case 4:
-                if(triggerNumber == ADC_PWM_TRIGGER_1)
-                {
-                    adcTriggerSourceValue = PWM4_TRIGGER1;
-                }
-                else if(triggerNumber == ADC_PWM_TRIGGER_2)
-                {
-                    adcTriggerSourceValue = PWM4_TRIGGER2;
-                }
-                break;
-        case 5:
-                if(triggerNumber == ADC_PWM_TRIGGER_1)
-                {
-                    adcTriggerSourceValue = PWM5_TRIGGER1;
-                }
-                else if(triggerNumber == ADC_PWM_TRIGGER_2)
-                {
-                    adcTriggerSourceValue = PWM5_TRIGGER2;
-                }
-                break;
-        case 6:
-                if(triggerNumber == ADC_PWM_TRIGGER_1)
-                {
-                    adcTriggerSourceValue = PWM6_TRIGGER1;
-                }
-                else if(triggerNumber == ADC_PWM_TRIGGER_2)
-                {
-                    adcTriggerSourceValue = PWM6_TRIGGER2;
-                }
-                break;
-        case 7:
+        case ADC_PWM_GENERATOR_7:
                 if(triggerNumber == ADC_PWM_TRIGGER_1)
                 {
                     adcTriggerSourceValue = PWM7_TRIGGER1;
@@ -556,14 +506,64 @@ static uint16_t ADC1_TriggerSourceValueGet(enum ADC_PWM_INSTANCE pwmInstance, en
                     adcTriggerSourceValue = PWM7_TRIGGER2;
                 }
                 break;
-        case 8:
+        case ADC_PWM_GENERATOR_6:
                 if(triggerNumber == ADC_PWM_TRIGGER_1)
                 {
-                    adcTriggerSourceValue = PWM8_TRIGGER1;
+                    adcTriggerSourceValue = PWM6_TRIGGER1;
                 }
                 else if(triggerNumber == ADC_PWM_TRIGGER_2)
                 {
-                    adcTriggerSourceValue = PWM8_TRIGGER2;
+                    adcTriggerSourceValue = PWM6_TRIGGER2;
+                }
+                break;
+        case ADC_PWM_GENERATOR_5:
+                if(triggerNumber == ADC_PWM_TRIGGER_1)
+                {
+                    adcTriggerSourceValue = PWM5_TRIGGER1;
+                }
+                else if(triggerNumber == ADC_PWM_TRIGGER_2)
+                {
+                    adcTriggerSourceValue = PWM5_TRIGGER2;
+                }
+                break;
+        case ADC_PWM_GENERATOR_4:
+                if(triggerNumber == ADC_PWM_TRIGGER_1)
+                {
+                    adcTriggerSourceValue = PWM4_TRIGGER1;
+                }
+                else if(triggerNumber == ADC_PWM_TRIGGER_2)
+                {
+                    adcTriggerSourceValue = PWM4_TRIGGER2;
+                }
+                break;
+        case ADC_PWM_GENERATOR_3:
+                if(triggerNumber == ADC_PWM_TRIGGER_1)
+                {
+                    adcTriggerSourceValue = PWM3_TRIGGER1;
+                }
+                else if(triggerNumber == ADC_PWM_TRIGGER_2)
+                {
+                    adcTriggerSourceValue = PWM3_TRIGGER2;
+                }
+                break;
+        case ADC_PWM_GENERATOR_2:
+                if(triggerNumber == ADC_PWM_TRIGGER_1)
+                {
+                    adcTriggerSourceValue = PWM2_TRIGGER1;
+                }
+                else if(triggerNumber == ADC_PWM_TRIGGER_2)
+                {
+                    adcTriggerSourceValue = PWM2_TRIGGER2;
+                }
+                break;
+        case ADC_PWM_GENERATOR_1:
+                if(triggerNumber == ADC_PWM_TRIGGER_1)
+                {
+                    adcTriggerSourceValue = PWM1_TRIGGER1;
+                }
+                else if(triggerNumber == ADC_PWM_TRIGGER_2)
+                {
+                    adcTriggerSourceValue = PWM1_TRIGGER2;
                 }
                 break;
          default:

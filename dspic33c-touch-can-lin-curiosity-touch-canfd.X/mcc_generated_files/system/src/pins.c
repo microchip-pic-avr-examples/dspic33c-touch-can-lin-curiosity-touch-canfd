@@ -15,7 +15,7 @@
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -49,7 +49,7 @@ void PINS_Initialize(void)
      * Setting the Output Latch SFR(s)
      ***************************************************************************/
     LATA = 0x0000;
-    LATB = 0x0000;
+    LATB = 0x4000;
     LATC = 0x0000;
     LATD = 0x0000;
     LATE = 0x0000;
@@ -109,9 +109,9 @@ void PINS_Initialize(void)
      ***************************************************************************/
      __builtin_write_RPCON(0x0000); // unlock PPS
 
-        RPINR27bits.U3RXR = 0x002F; //RB15->UART3:U3RX;
+        RPINR18bits.U1RXR = 0x002F; //RB15->UART1:U1RX;
         RPINR26bits.CAN1RXR = 0x003E; //RC14->CAN1:CAN1RX;
-        RPOR7bits.RP46R = 0x001B;  //RB14->UART3:U3TX;
+        RPOR7bits.RP46R = 0x0001;  //RB14->UART1:U1TX;
         RPOR15bits.RP63R = 0x0015;  //RC15->CAN1:CAN1TX;
 
      __builtin_write_RPCON(0x0800); // lock PPS

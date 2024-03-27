@@ -9,13 +9,13 @@
  *
  * @skipline @version   Firmware Driver Version 1.5.1
  *
- * @skipline @version   PLIB Version 1.6.2
+ * @skipline @version   PLIB Version 1.6.3
  *
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -74,8 +74,8 @@ const struct TIMER_INTERFACE CAN_TransmitTimer = {
 
 void SCCP1_Timer_Initialize(void)
 {
-    // MOD ; CCSEL disabled; TMR32 16 Bit; TMRPS 1:1; CLKSEL FOSC/2; TMRSYNC disabled; CCPSLP disabled; CCPSIDL disabled; CCPON disabled; 
-    CCP1CON1L = 0x0; //The module is disabled, till other settings are configured
+    // MOD ; CCSEL disabled; TMR32 16 Bit; TMRPS 1:16; CLKSEL FOSC/2; TMRSYNC disabled; CCPSLP disabled; CCPSIDL disabled; CCPON disabled; 
+    CCP1CON1L = 0x80; //The module is disabled, till other settings are configured
     //SYNC None; ALTSYNC disabled; ONESHOT disabled; TRIGEN disabled; IOPS Each Time Base Period Match; RTRGEN disabled; OPSRC Timer Interrupt Event; 
     CCP1CON1H = 0x0;
     //ASDG 0x0; SSDG disabled; ASDGM disabled; PWMRSEN disabled; 
@@ -90,8 +90,8 @@ void SCCP1_Timer_Initialize(void)
     CCP1TMRL = 0x0;
     //TMRH 0x0000; 
     CCP1TMRH = 0x0;
-    //PRL 39999; 
-    CCP1PRL = 0x9C3F;
+    //PRL 62499; 
+    CCP1PRL = 0xF423;
     //PRH 0; 
     CCP1PRH = 0x0;
     //CMPA 0; 

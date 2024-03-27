@@ -1,6 +1,6 @@
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -32,7 +32,16 @@ void TOUCH_Initialize(void)
 
 uint16_t TOUCH_PositionValueGet(void)
 {
-    return scroller_position;
+    uint16_t positionValue;
+    if (0u != scroller_status)
+    {
+        positionValue = scroller_position;
+    }
+    else
+    {
+        positionValue = 0; 
+    }
+    return positionValue;
 }
 
 enum TOUCH_PADS TOUCH_PadPositionGet(void)

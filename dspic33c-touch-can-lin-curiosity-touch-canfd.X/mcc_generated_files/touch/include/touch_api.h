@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library 3.0.0 Release
+  Touch Library 4.0.0 Release
 
   @Company
     Microchip Technology Inc.
@@ -16,7 +16,7 @@
 	
 *******************************************************************************/
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -48,7 +48,7 @@ extern "C" {
  *----------------------------------------------------------------------------*/
 
 #include "qtm_common_components_api.h"
-#include "qtm_acq_cvd_dspic33ck_api.h"
+#include "qtm_acq_dspic33c_ptg_0x004d_api.h"
 #include "qtm_touch_key_0x0002_api.h"
 #include "qtm_scroller_0x000b_api.h"
 

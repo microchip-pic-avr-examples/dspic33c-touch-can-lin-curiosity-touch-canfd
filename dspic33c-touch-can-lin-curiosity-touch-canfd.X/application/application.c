@@ -1,7 +1,7 @@
 
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -91,6 +91,6 @@ static void Operation_Touch_Tasks(void)
 
 static void Operation_Potentiometer_Tasks(void)
 {
-    float potVoltage;
+    float __attribute__((unused)) potVoltage;
     potVoltage = POT_VoltageGet();
 }
