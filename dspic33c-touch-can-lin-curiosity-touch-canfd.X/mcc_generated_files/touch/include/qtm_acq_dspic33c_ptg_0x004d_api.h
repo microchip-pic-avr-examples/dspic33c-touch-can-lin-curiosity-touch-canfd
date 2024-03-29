@@ -5,13 +5,13 @@
     Microchip Technology Inc.
 
   File Name:
-    qtm_acq_cvd_dspic33ck_api.h
+    qtm_acq_dspic33c_0x004d_api.h
 
   Summary:
-    QTouch Modular Library
+    Touch Modular Library
 
   Description:
-    API for acquisition module of dsPIC33C device family - DSPIC33C 0x004b
+    API for acquisition module of dsPIC33C device family - DSPIC33C 0x004d
 	
 *******************************************************************************/
 
@@ -38,8 +38,8 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 (INCLUDING BUT NOT LIMITED TO ANY DEFENSE  THEREOF),  OR  OTHER  SIMILAR  COSTS.
 *******************************************************************************/
 
-#ifndef QTM_ACQ_CVD_DSPIC33CK_API_H
-#define	QTM_ACQ_CVD_DSPIC33CK_API_H
+#ifndef QTM_ACQ_DSPIC33C_API_H
+#define	QTM_ACQ_DSPIC33C_API_H
 
 #include "qtm_common_components_api.h"
 
@@ -51,55 +51,60 @@ SUBSTITUTE  GOODS,  TECHNOLOGY,  SERVICES,  OR  ANY  CLAIMS  BY  THIRD   PARTIES
 /* Y line bit position */
 #define Y(n) ((uint32_t)(1uL << (n)))
 
-/* Extract Digital Gain */
-#define NODE_GAIN_DIG(m) (uint8_t)(m)
+
 /* Combine Analog / Digital Gain */
 #define NODE_GAIN(d) (uint8_t)(d)
 
-typedef enum tag_filter_level_t {
-    FILTER_LEVEL_1,
-    FILTER_LEVEL_2,
-    FILTER_LEVEL_4,
-    FILTER_LEVEL_8,
-    FILTER_LEVEL_16,
-    FILTER_LEVEL_32,
-    FILTER_LEVEL_64
+
+
+/* Touch library Oversampling setting */
+typedef enum tag_filter_level_t 
+{
+  FILTER_LEVEL_1,
+  FILTER_LEVEL_2,
+  FILTER_LEVEL_4,
+  FILTER_LEVEL_8,
+  FILTER_LEVEL_16,
+  FILTER_LEVEL_32,
+  FILTER_LEVEL_64
 } filter_level_t;
 
 /* Touch library GAIN setting */
-typedef enum tag_gain_t {
-    GAIN_1, 
-	GAIN_2, 
-	GAIN_4, 
-	GAIN_8, 
-	GAIN_16, 
-	GAIN_32
+typedef enum tag_gain_t 
+{
+  GAIN_1,
+  GAIN_2,
+  GAIN_4,
+  GAIN_8,
+  GAIN_16
 } gain_t;
 
 /**
  * acquisition frequency delay setting.
 
- * inserts "n" uS between consecutive measurements
- * e.g.  FREQ_HOP_SEL_14 setting inserts 14 uS.
+ * inserts "n" ADC core clock cycles between consecutive measurements
+ * e.g.  FREQ_HOP_SEL_14 setting inserts 14 ADC core clock cycles.
  */
-typedef enum tag_freq_config_sel_t {
-    FREQ_SEL_0,
-    FREQ_SEL_1,
-    FREQ_SEL_2,
-    FREQ_SEL_3,
-    FREQ_SEL_4,
-    FREQ_SEL_5,
-    FREQ_SEL_6,
-    FREQ_SEL_7,
-    FREQ_SEL_8,
-    FREQ_SEL_9,
-    FREQ_SEL_10,
-    FREQ_SEL_11,
-    FREQ_SEL_12,
-    FREQ_SEL_13,
-    FREQ_SEL_14,
-    FREQ_SEL_15,
+typedef enum tag_freq_config_sel_t 
+{
+  FREQ_SEL_0,
+  FREQ_SEL_1,
+  FREQ_SEL_2,
+  FREQ_SEL_3,
+  FREQ_SEL_4,
+  FREQ_SEL_5,
+  FREQ_SEL_6,
+  FREQ_SEL_7,
+  FREQ_SEL_8,
+  FREQ_SEL_9,
+  FREQ_SEL_10,
+  FREQ_SEL_11,
+  FREQ_SEL_12,
+  FREQ_SEL_13,
+  FREQ_SEL_14,
+  FREQ_SEL_15
 } freq_config_sel_t;
+
 
 typedef enum tagADCCLKSRC 
 {
@@ -119,11 +124,8 @@ typedef enum tagDeviceID {
     DSPIC33_CK64MC = 4u,
     DSPIC33_CK256MC = 5u,
 	DSPIC33_CH128MP_MASTER = 6u,
-    DSPIC33_CH128MP_SLAVE = 0x86u,
 	DSPIC33_CH512MP_MASTER = 7u,
-    DSPIC33_CH512MP_SLAVE  = 0x87u,        
-} dspic33_device_id;
-
+} dspic33c_device_id;
 
 /*----------------------------------------------------------------------------
  * Structure Declarations
@@ -131,66 +133,76 @@ typedef enum tagDeviceID {
 
 /* device information configuration */
 typedef struct {
-    adc_clock_src_t clk_src;        /* Selects the ADC clock source */
-    uint32_t    clk_freq;           /* frequency Hz for touch timing */
-    dspic33_device_id device_id;    /* Master(0)/Slave(1) bit7 | Device Identifier(bit0:6) */
-	uint32_t    ext_clk_freq;       /* External clock rate(Hz)when using primary Oscillator with PLL */
-} qtm_cvd_acq_dspic33ck_device_config_t;
+    adc_clock_src_t         adc_clk_src;            /* Selects the ADC clock source */
+    uint32_t                adc_clk_src_freq;       /* selected clock source frequency(Hz) for touch, min-16MHz and max 500MHz */
+    dspic33c_device_id      device_id;              /* Device Identifier */
+    uint8_t                 partner_adc_channel;    /* partner reference ADC channel - must be from Port B,C or D */
+    uint8_t                 dma_transfer_delay;     /* DMA transfer delay to start charge share */
+    uint8_t                 sccp_drive_delay;       /* SCCP delay to drive partner and shield pin */
+    uint16_t*               cvd_scan_data_ptr;      /* memory for storing the CVD scan data. Allocate memory of size (max oversampling of all channels * 2) */
+
+} qtm_acq_dspic33c_device_config_t;
 
 /* Node configuration */
-typedef struct {
-    uint32_t node_xmask; /* Selects the X Pins for this node */
-    uint32_t node_ymask; /* Selects the Y Pins for this node */
-    uint8_t node_csd; /* Charge Share Delay */
-    uint8_t node_gain; /* Bits 7:4 = Analog gain, Bits 3:0 = Digital gain */
-    uint8_t node_oversampling; /* Accumulator setting */
-} qtm_cvd_acq_dspic33ck_node_config_t;
+typedef struct
+{
+ uint32_t node_xmask;           /* Selects the X channels for this node */
+ uint32_t node_ymask;           /* Selects the Y channels for this node */
+ uint16_t node_csd;              /* Charge Share Delay Range: 8 to 1023*/
+ uint8_t node_gain;             /* Bits 7:4 = reserved, Bits 3:0 = Digital gain */
+ uint8_t node_oversampling;     /* Accumulator setting - Number of oversamples per measurement */
+}qtm_acq_dspic33c_node_config_t;
 
 /* Node run-time data - Defined in common api as it will be used with all acquisition modules */
 
 /* Node group configuration */
-typedef struct qtm_acq_node_group_config_type {
-    uint16_t num_sensor_nodes; /* Number of sensor nodes */
-    uint8_t acq_sensor_type; /* Self or mutual sensors */
-    uint8_t freq_option_select; /* SDS or ASDV setting */
-    uint8_t adc_interrupt_priority; /* Runtime priority of ADC interrupt */  
+typedef struct
+{
+  uint16_t num_sensor_nodes;            /* Number of sensor nodes */
+  uint8_t acq_sensor_type;              /* Self or mutual sensors */
+  uint8_t freq_option_select;           /* Hop Frequency selected */
 } qtm_acq_node_group_config_t;
 
 /* Container structure for sensor group */
-typedef struct {
-    qtm_acq_node_group_config_t* qtm_acq_node_group_config;
-    qtm_cvd_acq_dspic33ck_node_config_t* qtm_acq_node_config;
-    qtm_acq_node_data_t* qtm_acq_node_data;
-    qtm_cvd_acq_dspic33ck_device_config_t* qtm_acq_device_info;
+typedef struct
+{
+    qtm_acq_node_group_config_t    *qtm_acq_node_group_config;
+    qtm_acq_dspic33c_node_config_t  *qtm_acq_node_config;
+    qtm_acq_node_data_t            *qtm_acq_node_data;
+    qtm_acq_dspic33c_device_config_t *qtm_acq_device_config;
 } qtm_acquisition_control_t;
 
+/*----------------------------------------------------------------------------
+* prototypes
+*----------------------------------------------------------------------------*/
 
 /* Library prototypes */
+
 /*============================================================================
-touch_ret_t qtm_cvd_init_acquisition_module(qtm_acquisition_control_t* qtm_acq_control_ptr)
+touch_ret_t qtm_cvd_init_acquisition_module(qtm_acquisition_control_t* qtm_acq_control_ptr);
 ------------------------------------------------------------------------------
 Purpose: Initialize the ADC, Assign pins, set scaling for CVD vs system clock
 Input  : pointer to acquisition set,
-Output : touch_ret_t: TOUCH_SUCCESS or INVALID_PARAM
+Output : touch_ret_t: 
 Notes  : qtm_cvd_init_acquisition module must be called ONLY once with a pointer to each config set
 ============================================================================*/
 touch_ret_t qtm_cvd_init_acquisition_module(qtm_acquisition_control_t* qtm_acq_control_ptr);
 
 /*============================================================================
-touch_ret_t qtm_cvd_qtlib_assign_signal_memory(uint16_t* qtm_signal_raw_data_ptr)
+touch_ret_t qtm_cvd_qtlib_assign_signal_memory(uint32_t* qtm_signal_raw_data_ptr);
 ------------------------------------------------------------------------------
-Purpose : Assign raw signals pointer to array defined in application code
-Input   : pointer to raw data array
-Output  : touch_ret_t: TOUCH_SUCCESS or INVALID_POINTER
-Notes   : none
+Purpose: Assign raw signals pointer to array defined in application code
+Input  : pointer to raw data array
+Output  : touch_ret_t: 
+Notes  : none
 ============================================================================*/
-touch_ret_t qtm_cvd_qtlib_assign_signal_memory(uint16_t* qtm_signal_raw_data_ptr);
+touch_ret_t qtm_cvd_qtlib_assign_signal_memory(uint32_t* qtm_signal_raw_data_ptr );
 
 /*============================================================================
 touch_ret_t qtm_enable_sensor_node(qtm_acquisition_control_t* qtm_acq_control_ptr, uint16_t qtm_which_node_number)
 ------------------------------------------------------------------------------
 Purpose: Enables a sensor node for measurement
-Input  : Node configurations pointer, node (channel) number
+Input  : Node configurations pointer, node number
 Output : touch_ret_t:
 Notes  :
 ============================================================================*/
@@ -200,7 +212,7 @@ touch_ret_t qtm_enable_sensor_node(qtm_acquisition_control_t* qtm_acq_control_pt
 touch_ret_t qtm_disable_sensor_node(qtm_acquisition_control_t* qtm_acq_control_ptr, uint16_t qtm_which_node_number)
 ------------------------------------------------------------------------------
 Purpose: Disables a sensor node for measurement
-Input  : Node configurations pointer, node (channel) number
+Input  : Node configurations pointer, node number
 Output : touch_ret_t:
 Notes  :
 ============================================================================*/
@@ -209,8 +221,8 @@ touch_ret_t qtm_disable_sensor_node(qtm_acquisition_control_t* qtm_acq_control_p
 /*============================================================================
 touch_ret_t qtm_calibrate_sensor_node(qtm_acquisition_control_t* qtm_acq_control_ptr, uint16_t qtm_which_node_number)
 ------------------------------------------------------------------------------
-Purpose: Marks a sensor node for calibration
-Input  : Node configurations pointer, node (channel) number
+Purpose:  Marks a sensor node for calibration
+Input  :  Node configurations pointer, node number
 Output : touch_ret_t:
 Notes  :
 ============================================================================*/
@@ -219,7 +231,7 @@ touch_ret_t qtm_calibrate_sensor_node(qtm_acquisition_control_t* qtm_acq_control
 /*============================================================================
 void qtm_cvd_de_init(void)
 ------------------------------------------------------------------------------
-Purpose: Clear PTC Pin registers, set TOUCH_STATE_NULL
+Purpose: Clear ADC Pin registers, set TOUCH_STATE_NULL
 Input  : none
 Output : none
 Notes  : none
@@ -229,86 +241,133 @@ void qtm_cvd_de_init(void);
 /*============================================================================
 touch_ret_t qtm_cvd_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_control_pointer, void (*measure_complete_callback) (void));
 ------------------------------------------------------------------------------
-Purpose: Loads touch configurations for first channel and start,
-Input  : Node configurations pointer, measure complete callback pointer
+Purpose:  Loads touch configurations for first channel and start,  
+Input  :  Node configurations pointer, measure complete callback pointer
 Output : touch_ret_t:
 Notes  :
 ============================================================================*/
-touch_ret_t qtm_cvd_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_control_pointer, void (*measure_complete_callback)(void));
+touch_ret_t qtm_cvd_start_measurement_seq(qtm_acquisition_control_t* qtm_acq_control_pointer, void (*measure_complete_callback) (void));
 
 /*============================================================================
 touch_ret_t qtm_acquisition_process(void)
 ------------------------------------------------------------------------------
 Purpose: Signal capture and processing
 Input  : (Measured signals, config)
-Output : TOUCH_SUCCESS or TOUCH_CAL_ERROR
+Output : touch_ret_t
 Notes  : none
 ============================================================================*/
 touch_ret_t qtm_acquisition_process(void);
 
 /*============================================================================
-touch_ret_t qtm_update_acq_freq_delay(void)
+touch_ret_t qtm_update_acq_freq_delay(uint8_t freq_hop_delay, uint8_t scale_factor)
 ------------------------------------------------------------------------------
 Purpose: Sets the delay used as part of freqency hop
-Input  : Frequency hop->current frequency.
-Output : TOUCH_SUCCESS or TOUCH_CAL_ERROR
+Input  : Frequency hop delay(adc clock cycles), multiplication factor for frequency hop delay
+Output : touch_ret_t
 Notes  : none
 ============================================================================*/
-touch_ret_t qtm_update_acq_freq_delay(uint8_t update_delay);
+touch_ret_t qtm_update_acq_freq_delay(uint8_t freq_hop_delay, uint8_t scale_factor);
 
 /*============================================================================
-void qtm_dspic33_touch_handler_eoc(void)
+touch_ret_t qtm_cvd_config_update(qtm_acquisition_control_t* qtm_acq_control_ptr)
 ------------------------------------------------------------------------------
-Purpose: determines which channel triggered ADC interrupt, 
-         updates touch data,clears channel interrupt flags
+Purpose: To update the CVD Configurations
+Input  : acquisition control pointer
+Output : touch_ret_t
+Notes  : If the PTG or DMA or SCCP or PPS is updated by application then application must call this API to update the CVD configurations before next measurement.    
+       : This API shall not be called if acquisition is in progress
+============================================================================*/
+touch_ret_t qtm_cvd_config_update( qtm_acquisition_control_t *qtm_acq_control_ptr );
+ 
+/*============================================================================
+void qtm_dspic33c_touch_handler_eoc(void)
+------------------------------------------------------------------------------
+Purpose:  Captures  the  measurement,  starts  the  next  or  End  Of  Sequence  handler
+Input    :  none
+Output  :  touch_ret_t
+Notes    :  none
+============================================================================*/
+void qtm_dspic33c_touch_handler_eoc(void);
+ 
+/*============================================================================
+void qtm_disable_touch(void)
+------------------------------------------------------------------------------
+Purpose:  Turn off touch module
+Input  :  none
+Output : none
+Notes  :
+============================================================================*/
+void qtm_disable_touch(void);
+
+/*============================================================================
+void qtm_enable_touch(void)
+------------------------------------------------------------------------------
+Purpose:  Turn ON touch module
+Input  :  none
+Output : none
+Notes  :
+============================================================================*/
+void qtm_enable_touch(void);
+
+ /*============================================================================
+uint16_t  qtm_get_current_measure_channel(void)
+------------------------------------------------------------------------------
+Purpose: get the last measured channel
 Input  : none
 Output : none
 Notes  : none
 ============================================================================*/
-void qtm_dspic33_touch_handler_eoc(void);
+uint16_t  qtm_get_current_measure_channel(void);
 
 /*============================================================================
-void qtm_disable_touch_adc(void)
+uint8_t qtm_cvd_get_port_pin_map(uint8_t channel_number)
 ------------------------------------------------------------------------------
-Purpose:  Turn off touch ADC module
-Input  :  none
-Output : none
-Notes  :
+Purpose:  Returns the port and pin info for the ADC channel
+Input  :  ADC channel number
+Output :  Port (Bits 7:5), Pin (Bits 4:0)
+Notes  : This API must not be called before calling the qtm_cvd_init_acquisition_module API
 ============================================================================*/
-void qtm_disable_touch_adc(void);
-
+uint8_t qtm_cvd_get_port_pin_map(uint8_t channel_number);
 
 /*============================================================================
-void qtm_enable_touch_adc(void)
+uint16_t  qtm_cvd_get_scanA_signal()
 ------------------------------------------------------------------------------
-Purpose:  Turn ON touch ADC module
-Input  :  none
-Output : none
-Notes  :
+Purpose: get scanA of last measurement
+Input  : none
+Output : 
+Notes  : none
 ============================================================================*/
-void qtm_enable_touch_adc(void);
-
+uint16_t  qtm_cvd_get_scanA_signal(void);
+         
+/*============================================================================
+uint16_t  qtm_cvd_get_scanB_signal()
+------------------------------------------------------------------------------
+Purpose: get scanB of last measurement
+Input  : none
+Output : 
+Notes  : none
+============================================================================*/        
+uint16_t  qtm_cvd_get_scanB_signal(void);
 
 /*============================================================================
-uint16_t qtm_dspic33ck_acq_module_get_id(void)
+uint16_t qtm_dspic33c_acq_module_get_id(void)
 ------------------------------------------------------------------------------
 Purpose: Returns the module ID
 Input  : none
 Output : Module ID
 Notes  : none
 ============================================================================*/
-uint16_t qtm_dspic33ck_acq_module_get_id(void);
+uint16_t qtm_dspic33c_acq_module_get_id(void);
 
 /*============================================================================
-uint8_t qtm_dspic33ck_acq_module_get_version(void)
+uint8_t qtm_dspic33c_acq_module_get_ver(void)
 ------------------------------------------------------------------------------
 Purpose: Returns the module Firmware version
 Input  : none
 Output : Module ID - Upper nibble major / Lower nibble minor
 Notes  : none
 ============================================================================*/
-uint8_t qtm_dspic33ck_acq_module_get_version(void);
-
+uint8_t qtm_dspic33c_acq_module_get_ver(void);
 
 /*----------------------------------------------------------------------------
  *     device identifier definitions
@@ -364,13 +423,6 @@ uint8_t qtm_dspic33ck_acq_module_get_version(void);
 
 #define DSPIC33_DEVICE_IDENTIFIER  DSPIC33_CH128MP_MASTER
 
-#elif   defined (__dsPIC33CH64MP202S1__) || defined (__dsPIC33CH64MP203S1__) || defined (__dsPIC33CH64MP205S1__) ||defined (__dsPIC33CH64MP206S1__) ||defined (__dsPIC33CH64MP208S1__) || \
-        defined (__dsPIC33CH64MP502S1__) || defined (__dsPIC33CH64MP503S1__) || defined (__dsPIC33CH64MP505S1__) ||defined (__dsPIC33CH64MP506S1__) ||defined (__dsPIC33CH64MP508S1__) || \
-        defined (__dsPIC33CH128MP202S1__) || defined (__dsPIC33CH128MP203S1__) || defined (__dsPIC33CH128MP205S1__) ||defined (__dsPIC33CH128MP206S1__) ||defined (__dsPIC33CH128MP208S1__) || \
-        defined (__dsPIC33CH128MP502S1__) || defined (__dsPIC33CH128MP503S1__) || defined (__dsPIC33CH128MP505S1__) ||defined (__dsPIC33CH128MP506S1__) ||defined (__dsPIC33CH128MP508S1__) 
-
-#define DSPIC33_DEVICE_IDENTIFIER  DSPIC33_CH128MP_SLAVE 
-
 #elif   defined (__dsPIC33CH256MP205__) ||  defined (__dsPIC33CH256MP206__) ||  defined (__dsPIC33CH256MP208__)  || \
         defined (__dsPIC33CH256MP505__) ||  defined (__dsPIC33CH256MP506__) ||  defined (__dsPIC33CH256MP508__)  || \
         defined (__dsPIC33CH512MP205__) ||  defined (__dsPIC33CH512MP206__) ||  defined (__dsPIC33CH512MP208__) || \
@@ -378,15 +430,15 @@ uint8_t qtm_dspic33ck_acq_module_get_version(void);
 
 #define DSPIC33_DEVICE_IDENTIFIER  DSPIC33_CH512MP_MASTER
 
-#elif   defined (__dsPIC33CH256MP205S1__) ||defined (__dsPIC33CH256MP206S1__) ||defined (__dsPIC33CH256MP208S1__) || \
-        defined (__dsPIC33CH256MP505S1__) ||defined (__dsPIC33CH256MP506S1__) ||defined (__dsPIC33CH256MP508S1__) || \
-        defined (__dsPIC33CH512MP205S1__) ||defined (__dsPIC33CH512MP206S1__) ||defined (__dsPIC33CH512MP208S1__) || \
-        defined (__dsPIC33CH512MP505S1__) ||defined (__dsPIC33CH512MP506S1__) ||defined (__dsPIC33CH512MP508S1__) 
-
-#define DSPIC33_DEVICE_IDENTIFIER  DSPIC33_CH512MP_SLAVE
-
 #endif
- 
 
-#endif	/* QTM_ACQ_CVD_DSPIC33CK_API_H */
+#endif /* QTM_ACQ_DSPIC33C_API_H */
+
+
+
+
+
+
+
+
 

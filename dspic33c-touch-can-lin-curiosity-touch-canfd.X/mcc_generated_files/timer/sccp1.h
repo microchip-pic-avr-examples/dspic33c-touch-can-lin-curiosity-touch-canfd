@@ -9,13 +9,13 @@
  *
  * @skipline @version   Firmware Driver Version 1.5.1
  *
- * @skipline @version   PLIB Version 1.6.2
+ * @skipline @version   PLIB Version 1.6.3
  *
  * @skipline  Device : dsPIC33CK1024MP710
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 

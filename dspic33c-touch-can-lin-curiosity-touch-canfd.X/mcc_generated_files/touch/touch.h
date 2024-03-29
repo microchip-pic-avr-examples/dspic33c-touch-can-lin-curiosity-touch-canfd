@@ -1,5 +1,5 @@
 /*******************************************************************************
-  Touch Library 3.0.0 Release
+  Touch Library 4.0.0 Release
 
   @Company
     Microchip Technology Inc.
@@ -15,7 +15,7 @@
 	
 *******************************************************************************/
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -67,12 +67,38 @@
 
 #define DEF_SENSOR_TYPE NODE_SELFCAP
 
+        
+/* The Partner ADC channel for CVD acquisition */ 
+/* The pin must be from PortB or PortC or PortD */
+/* This pin must be left unconnected */
+/* Range - 0u to 31u */
+#define CVD_PARTNER_ADC_CHANNEL            11 
 /* Set default bootup acquisition frequency.
  * Range: FREQ_SEL_0 - FREQ_SEL_15 , FREQ_SEL_SPREAD
  * Default value: FREQ_SEL_0.
  */
 #define DEF_SEL_FREQ_INIT FREQ_SEL_0
-#define DEF_ADC_INT_PRIORITY    1u        
+/*Set the scaling factor for frequency hop delay
+ * Range: 1u - 255u
+ * Default : 1u
+ */        
+#define DEF_FREQ_HOP_TIME_SCALE         1u
+
+/* Set external clock frequency if primary oscillator with PLL is used.
+ * Range: NA
+ * Default value: None
+ */    
+#define EXT_CLK_FREQ                 8000000uL  /* External clock freq - 8MHz*/
+        
+/* 
+ * Constants - Do not modify
+ */
+#define DEF_DMA_TRANSFER_TIME               3u /* DMA transfer time - 3 DMA clocks */
+#define DEF_PTG_STROBE_TIME                 3u /* PTG strobe time - 3 ADC core clocks (TADCORE) */        
+#define FRC_CLK_FREQ                    8000000uL  /* FRC clock freq - 8MHz*/
+#define MAX_SHARED_ADC_CLK_FREQ         50000000uL /* Max allowed ADC shared core clock freq is 50MHz*/
+#define MAX_INPUT_ADC_CLK_FREQ         500000000uL /* Max allowed ADC input clock freq is 500MHz */
+#define MAX_CORESRC_ADC_CLK_FREQ       250000000uL /* Max allowed ADC core source freq is 250MHz */
 
 /*----------------------------------------------------------------------------
  *     defines
@@ -90,7 +116,7 @@
 #define DEF_NUM_CHANNELS (3)
 
 /* Defines node parameter setting
- * {X-line, Y-line, Charge Share Delay, Digital Gain,
+ * {X-line, Y-line, Charge Share Delay(CSD), Digital Gain,
  * filter level}
  */
 #define NODE_0_PARAMS                                                                                               \

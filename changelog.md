@@ -1,3 +1,9 @@
+#dspic33c-touch-can-lin-curiosity-oob v1.0.1
+
+### Release Highlights
+
+- Updated the project using touch library version 4.0.0
+
 # dspic33c-touch-can-lin-curiosity-touch-canfd v1.0.0
 
 ### Release Highlights

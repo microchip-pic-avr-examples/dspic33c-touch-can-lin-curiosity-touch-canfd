@@ -12,7 +12,7 @@
  * @skipline  Device : dsPIC33CK1024MP710
 */
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -40,8 +40,8 @@
 #include "../../can/can1.h"
 #include "../dmt.h"
 #include "../../timer/sccp1.h"
-#include "../../timer/sccp4.h"
-#include "../../uart/uart3.h"
+#include "../../timer/tmr1.h"
+#include "../../uart/uart1.h"
 #include "../interrupt.h"
 #include "../../touch/touch.h"
 
@@ -54,8 +54,8 @@ void SYSTEM_Initialize(void)
     CAN1_Initialize();
     DMT_Initialize();
     SCCP1_Timer_Initialize();
-    SCCP4_Timer_Initialize();
-    UART3_Initialize();
+    TMR1_Initialize();
+    UART1_Initialize();
     INTERRUPT_GlobalEnable();
     INTERRUPT_Initialize();
     touch_init();

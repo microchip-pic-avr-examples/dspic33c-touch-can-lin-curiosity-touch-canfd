@@ -15,7 +15,7 @@
 */
 
 /*
-© [2023] Microchip Technology Inc. and its subsidiaries.
+© [2024] Microchip Technology Inc. and its subsidiaries.
 
     Subject to your compliance with these terms, you may use Microchip 
     software and any derivatives exclusively with Microchip products. 
@@ -514,14 +514,14 @@ static void CAN1_BitRateConfiguration(void)
     C1NBTCFGH = 0xE;
     // SJW 3; TSEG2 3; 
     C1NBTCFGL = 0x303;
-    // BRP 0; TSEG1 0; 
-    C1DBTCFGH = 0x0;
-    // SJW 1; TSEG2 1; 
-    C1DBTCFGL = 0x101;
+    // BRP 0; TSEG1 1; 
+    C1DBTCFGH = 0x1;
+    // SJW 0; TSEG2 0; 
+    C1DBTCFGL = 0x0;
     // EDGFLTEN disabled; TDCMOD Auto; SID11EN disabled; 
     C1TDCH = 0x2;
-    // TDCV 0x0; TDCO 1; 
-    C1TDCL = 0x100;
+    // TDCV 0x0; TDCO 2; 
+    C1TDCL = 0x200;
 }
 
 /**
