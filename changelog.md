@@ -1,3 +1,9 @@
+#dspic33c-touch-can-lin-curiosity-oob v1.0.2
+
+### Release Highlights
+
+- Fixed project loading errors
+
 #dspic33c-touch-can-lin-curiosity-oob v1.0.1
 
 ### Release Highlights
