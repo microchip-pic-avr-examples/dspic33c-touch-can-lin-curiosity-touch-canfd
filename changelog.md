@@ -1,4 +1,10 @@
-#dspic33c-touch-can-lin-curiosity-oob v1.0.1
+# dspic33c-touch-can-lin-curiosity-oob v1.0.2
+
+### Release Highlights
+
+- Project configuration issue resolved
+
+# dspic33c-touch-can-lin-curiosity-oob v1.0.1
 
 ### Release Highlights
 
